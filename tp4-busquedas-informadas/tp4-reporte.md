@@ -1,9 +1,9 @@
 **B)** 
 
-Media de las longitudes de las secuencias:
+Media de la cantidad de estados explorados:
 
-![image](https://user-images.githubusercontent.com/88392382/131386366-fcdd3cd9-1852-4bfc-a16e-40b6b252cdec.png)
+![image](https://user-images.githubusercontent.com/88392382/131424103-f22d6cb1-eb78-4c02-9c38-ce31c976ddaf.png)
 
-Desviación Estandar de las longitudes de las secuencias:
+Desviación Estandar de la cantidad de estados explorados:
 
-![image](https://user-images.githubusercontent.com/88392382/131386489-1d1957de-fd27-48a6-85b2-48fd5a760753.png)
+![image](https://user-images.githubusercontent.com/88392382/131424174-92cfb319-3f7b-481f-b47c-fdd5fb191eb1.png)
