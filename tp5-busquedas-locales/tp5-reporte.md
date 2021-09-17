@@ -2,7 +2,7 @@
 
 **Legajo:** 13244
 
-**Algoritmos de Búsqueda Local**
+***Algoritmos de Búsqueda Local***
 
 **Hill Climbing:**
 
@@ -20,7 +20,8 @@ Desviación estándar del número de estados recorridos: 0.651258728182957
 
 Gráfico de cajas de los tiempos de ejecución:
 
-![](Aspose.Words.ca263c95-59ac-417a-a0d8-d8fa34203250.001.png)
+![image](https://user-images.githubusercontent.com/88392382/133856644-7442e59b-87d6-4ed6-97df-6dde5d0ead76.png)
+
 
 **Con 8 Reinas:**
 
@@ -36,7 +37,7 @@ Desviación estándar del número de estados recorridos: 0.9128709291752769
 
 Gráfico de cajas de los tiempos de ejecución: 
 
-![](Aspose.Words.ca263c95-59ac-417a-a0d8-d8fa34203250.002.png)
+![image](https://user-images.githubusercontent.com/88392382/133856662-abb02836-0765-419a-ae2b-96314ae5777e.png)
 
 **Con 10 Reinas:**
 
@@ -52,7 +53,7 @@ Desviación estándar del número de estados recorridos: 0.7760791522613609
 
 Gráfico de cajas de los tiempos de ejecución: 
 
-![](Aspose.Words.ca263c95-59ac-417a-a0d8-d8fa34203250.003.png)
+![image](https://user-images.githubusercontent.com/88392382/133856693-204e3e9f-23fd-4b6c-b0c0-64a1f7d159ba.png)
 
 **Simulated Annealing:** 
 
@@ -70,7 +71,7 @@ Desviación estándar del número de estados recorridos: 0.0
 
 Gráfico de cajas de los tiempos de ejecución: 
 
-![](Aspose.Words.ca263c95-59ac-417a-a0d8-d8fa34203250.004.png)
+![image](https://user-images.githubusercontent.com/88392382/133856704-b605005e-ec69-4802-bc6e-72cd06a8939d.png)
 
 **Con 8 Reinas:**
 
@@ -86,7 +87,7 @@ Desviación estándar del número de estados recorridos: 0.18257418583505536
 
 Gráfico de cajas de los tiempos de ejecución: 
 
-![](Aspose.Words.ca263c95-59ac-417a-a0d8-d8fa34203250.005.png)
+![image](https://user-images.githubusercontent.com/88392382/133856716-cd8ea43f-f669-4155-bfe7-4feb7a17cbf1.png)
 
 **Con 10 Reinas:**
 
@@ -102,7 +103,7 @@ Desviación estándar del número de estados recorridos: 0.0
 
 Gráfico de cajas de los tiempos de ejecución: 
 
-![](Aspose.Words.ca263c95-59ac-417a-a0d8-d8fa34203250.006.png)
+![image](https://user-images.githubusercontent.com/88392382/133856728-145c40f2-3871-48e6-9253-509b2bd259fd.png)
 
 **Genetic Algorithm:**
 
@@ -120,7 +121,8 @@ Desviación estándar del número de estados recorridos: 0.0
 
 Gráfico de cajas de los tiempos de ejecución: 
 
-![](Aspose.Words.ca263c95-59ac-417a-a0d8-d8fa34203250.007.png)
+![image](https://user-images.githubusercontent.com/88392382/133856744-617aaa1f-416b-405e-9e1c-cd392e559aff.png)
+
 
 **Con 8 Reinas:**
 
@@ -136,7 +138,7 @@ Desviación estándar del número de estados recorridos: 0.490132517853561
 
 Gráfico de cajas de los tiempos de ejecución: 
 
-![](Aspose.Words.ca263c95-59ac-417a-a0d8-d8fa34203250.008.png)
+![image](https://user-images.githubusercontent.com/88392382/133856771-f539cf09-2c2c-4f8b-a809-d914c38758c4.png)
 
 **Con 10 Reinas:**
 
@@ -152,20 +154,20 @@ Desviación estándar del número de estados recorridos: 0.5713464637233658
 
 Gráfico de cajas de los tiempos de ejecución: 
 
-![](Aspose.Words.ca263c95-59ac-417a-a0d8-d8fa34203250.009.png)
+![image](https://user-images.githubusercontent.com/88392382/133856778-de06273e-a761-49a0-84e0-c664130b4df0.png)
 
 **B) Gráficos de H(e):**
 
 **Hill Climbing:**
 
-![](Aspose.Words.ca263c95-59ac-417a-a0d8-d8fa34203250.010.png)
+![image](https://user-images.githubusercontent.com/88392382/133856787-b69b063e-1e9a-44a0-8c98-e144396a0329.png)
 
 **Simulated Annealing:**
 
-![](Aspose.Words.ca263c95-59ac-417a-a0d8-d8fa34203250.011.png)
+![image](https://user-images.githubusercontent.com/88392382/133856808-c73fce4d-aa99-4d2e-86e0-ac774055c751.png)
 
 **Genetic Algorithm:**
 
-![](Aspose.Words.ca263c95-59ac-417a-a0d8-d8fa34203250.012.png)
+![image](https://user-images.githubusercontent.com/88392382/133856819-eaef32e0-939e-4fef-9b63-eb1488ddd408.png)
 
 **C)** Considero que el algoritmo más adecuado para este problema es el simulates annealing, ya que presentó mejores resultados y tiempos de ejecución, esto se debe a que no se queda atacado en mínimos locales como el Hill climbing, y para este problema donde el resultado depende de las posiciones de las reinas con respecto a las demás, el cruce en genetic algorithm no siempre deja buenos hijos, ya al cruzar resultados buenos pueden que los genes que se toman de cada padre den un resultado peor.
