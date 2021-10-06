@@ -20,7 +20,7 @@
 
 **2-)** Empezamos con la asignación parcial que nos da el problema
 
-![](Aspose.Words.7f216151-f765-4824-af0d-46cf3762f5f9.001.png)
+![image](https://user-images.githubusercontent.com/88392382/136292480-ed20fa7b-5c04-4748-8869-8d801b540886.png)
 
 |WA|NT|Q|NSW|V|SA|T|
 | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
@@ -44,6 +44,8 @@ Por arco de consistencia Q -> NT y Q -> NSW se elimina Rojo y Azul de Q, dejando
 |WA|NT|Q|NSW|V|SA|T|
 | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
 |R|A||R|A|V|R V A|
+
+
 Por lo que no es una solución consistente, demostrando así que se puede detectar la inconsistencia de la solución parcial {WA = Rojo, V = Azul} utilizando arco de consistencia.
 
 **3-)** El peor caso del AC-3 es O(n^2\*d^3), ya que un grafo de restricciones puede tener hasta n^2 arcos (siendo n el número de variables) que se pueden encolar d veces cada uno, verificando la consistencia de cada arco a una complejidad de O(d^2), pero al ser un árbol sabemos que tiene n-1 arcos, por lo que quedaría con una complejidad temporal en el peor caso de O((n-1) \*d^2), que se simplifica a **O(n\*d^2)**.
@@ -76,13 +78,13 @@ Después del paso 2, el CSP tiene 2-consistencia, por lo que la asignación del 
 
 `	`Gráfico de cajas:
 
-![](Aspose.Words.7f216151-f765-4824-af0d-46cf3762f5f9.002.png)
+![image](https://user-images.githubusercontent.com/88392382/136292502-eb2a885c-7512-480c-adae-182204df1c55.png)
 
 -Estados recorridos: [4, 73, 347, 161, 520]
 
 `	`Gráfico de cajas:
 
-![](Aspose.Words.7f216151-f765-4824-af0d-46cf3762f5f9.003.png)
+![image](https://user-images.githubusercontent.com/88392382/136292511-ec089aa8-9771-47cd-ad37-035bd286a0fb.png)
 
 **Forward Checking:**
 
@@ -90,10 +92,10 @@ Después del paso 2, el CSP tiene 2-consistencia, por lo que la asignación del 
 
 `	`Gráfico de cajas:
 
-![](Aspose.Words.7f216151-f765-4824-af0d-46cf3762f5f9.004.png)
+![image](https://user-images.githubusercontent.com/88392382/136292522-d9e04ede-22b9-4956-b3f3-57fd36e1afb4.png)
 
 -Estados recorridos: [4, 32, 146, 87, 299]
 
 `	`Gráfico de cajas:
 
-![](Aspose.Words.7f216151-f765-4824-af0d-46cf3762f5f9.005.png)
+![image](https://user-images.githubusercontent.com/88392382/136292539-b8e5cc2e-d627-44b6-9dfb-572faea47a86.png)
