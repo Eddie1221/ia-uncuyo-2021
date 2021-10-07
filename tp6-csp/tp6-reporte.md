@@ -74,7 +74,7 @@ Después del paso 2, el CSP tiene 2-consistencia, por lo que la asignación del 
 
 **Backtracking:**
 
--Tiempos de ejecución: [0.0, 0.01795172691345215, 0.17852330207824707, 0.151594877243042, 1.0132980346679688]
+-Tiempos de ejecución: [0.0009963512420654297, 0.01795172691345215, 0.17852330207824707, 0.151594877243042, 1.0132980346679688]
 
 `	`Gráfico de cajas:
 
@@ -88,7 +88,7 @@ Después del paso 2, el CSP tiene 2-consistencia, por lo que la asignación del 
 
 **Forward Checking:**
 
--Tiempos de ejecución: [0.0, 0.0, 0.001993894577026367, 0.0009965896606445312, 0.005009651184082031]
+-Tiempos de ejecución: [0.0009968280792236328, 0.001020669937133789, 0.001993894577026367, 0.0009965896606445312, 0.005009651184082031]
 
 `	`Gráfico de cajas:
 
