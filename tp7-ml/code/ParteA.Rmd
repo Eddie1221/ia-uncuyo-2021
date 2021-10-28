@@ -1,0 +1,262 @@
+
+```{r}
+library(dplyr) 
+library(readr)
+library(rpart)
+library(caret)
+library(randomForest)
+library(ggplot2)
+
+#selecciona una semilla y lee el documento
+set.seed(2021)
+
+dataset_trees <- read_csv("D:/Uni/Datasets_MA/arbolado-mza-dataset.csv")
+trainset <- dataset_trees
+
+#1.a
+#crea una particion con los indices para el set de entrenamiento
+trainIndex <- createDataPartition(trainset$inclinacion_peligrosa,p=0.80,list=FALSE)
+
+#crea las divisiones del set de entrenamiento y el de test, y las escribe en los documentos.
+data_train <- trainset[ trainIndex,]
+data_test <-  trainset[-trainIndex,]
+
+#escribe los sets en archivos csv
+write.csv(data_train,"arbolado-publico-mendoza-2021-train.csv")
+write.csv(data_test,"arbolado-publico-mendoza-2021-validation.csv")
+```
+
+```{r}
+#2.a
+#Se crea un set con la distribucion de inclinacion_peligros y luego la grafica
+distribucion <- data_train %>% group_by(inclinacion_peligrosa) %>% summarise(total=n())
+
+ggplot(distribucion, aes(inclinacion_peligrosa, total)) +  geom_col(fill = "red")
+
+#2.b
+#Se crea el set con la distribucion de los arboles peligrosos agrupados por seccion y luego lo grafica
+seccion_peligrosa <- data_train %>% filter(inclinacion_peligrosa == 1) %>% group_by(nombre_seccion) %>% summarise(total = n())
+
+ggplot(seccion_peligrosa, aes(nombre_seccion, total)) + geom_col(fill = "green") + theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+#2.c
+#Se crea sel set con la distribucion de los arboles peligroso agrupados por especia y luego lo grafica
+especie_peligrosa <- data_train %>% filter(inclinacion_peligrosa == 1) %>% group_by(especie) %>% summarise(total = n())
+
+ggplot(especie_peligrosa, aes(especie, total)) + geom_col(fill = "blue") + theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+```{r}
+#3.b
+#Grafica los historgramas con la cantidad de ocurrencias de los valores de circ_tronco_cm con 10, 50 y 100 bins
+ggplot(data_train, aes(circ_tronco_cm)) + geom_histogram(bins = 10)
+ggplot(data_train, aes(circ_tronco_cm)) + geom_histogram(bins = 50)
+ggplot(data_train, aes(circ_tronco_cm)) + geom_histogram(bins = 100)
+
+
+#3.c
+#Grafica el historgrama con la cantidad ocurrencias de los valores de circ_tronco_cm de los arboles peligrosos
+circ_tronco_peligroso <- data_train %>% filter(inclinacion_peligrosa == 1)
+ggplot(circ_tronco_peligroso, aes(circ_tronco_cm)) + geom_histogram(bins = 100, fill = "red")
+
+#Grafica el historgrama con la cantidad ocurrencias de los valores de circ_tronco_cm de los arboles no peligrosos
+circ_tronco_no_peligroso <- data_train %>% filter(inclinacion_peligrosa == 0)
+ggplot(circ_tronco_no_peligroso, aes(circ_tronco_cm)) + geom_histogram(bins = 100, fill = "blue")
+
+#3.d
+#Crea la variable categorica "circ_tronco_cm_cat" y se la añade al set de entrenamiento
+data_train_circ_cat <- data_train %>% mutate(circ_tronco_cm_cat = ifelse(`circ_tronco_cm` <= 150,'bajo',
+                                                                  ifelse(`circ_tronco_cm` > 150 & `circ_tronco_cm` <= 250, 'medio',
+                                                                  ifelse(`circ_tronco_cm` > 250 & `circ_tronco_cm` <= 350, 'alto','muy alto'))))
+
+"escribe ese set en un archivo csv"
+write.csv(data_train_circ_cat, "arbolado-publico-mendoza-2021-circ_tronco_cm-train.csv")
+```
+
+```{r}
+#4.a
+#crea una columna con una probabilidad aleatoria entre 0 y 1 y la añade como columna a un dataframe
+set.seed(2021)
+prediction_prob <- function(dataframe){
+  columnas <- nrow(dataframe)
+  probabilidades <- runif(columnas,0,1)
+  dataframe$prediction_prob <- probabilidades
+  return(dataframe)
+}
+
+#4.b
+#Utiliza la funcion anterior para crear otra columna de prediccion basandose en los valores de la columna aleatoria y la añade al dataframe
+random_classifier <- function(dataframe){
+  dataframe <- prediction_prob(dataframe)
+  dataframe <- dataframe %>% mutate(prediction_class = ifelse(`prediction_prob` >= 0.5, 1, 0))
+  return(dataframe)
+}
+
+#4.c
+#la prueba con el dataframe test
+data_validation <- random_classifier(data_test)
+
+#4.d
+#calcula los elementos de la matriz de confunsion para el clasificador aleatorio 
+truePositive <- data_validation %>% filter(inclinacion_peligrosa == 1 & prediction_class == 1)
+trueNegative <- data_validation %>% filter(inclinacion_peligrosa == 0 & prediction_class == 0)
+falsePositive <- data_validation %>% filter(inclinacion_peligrosa == 0 & prediction_class == 1)
+falseNegative <- data_validation %>% filter(inclinacion_peligrosa == 1 & prediction_class == 0)
+
+TPrandom <- nrow(truePositive)
+TNrandom <- nrow(trueNegative)
+FPrandom <- nrow(falsePositive)
+FNrandom <- nrow(falseNegative)
+
+#convierte los datos en una matriz y la imprime
+Matrix <- c(TPrandom, FPrandom, FNrandom, TNrandom)
+dim(Matrix) <- c(2,2)
+colnames(Matrix) <- c("Predicted: Positive"," Predicted: Negative")
+rownames(Matrix) <- c("Actual: Positive","Actual: Negative")
+Matrix
+```
+
+```{r}
+#5.a
+#clasificador bigger class que toma la clase de inclinacion peligrosa y toma el valor que aparece mas y la aigna a la columna de predicccion.
+biggerclass_classifier <- function(dataframe, datatrain){
+  classes <- datatrain %>% group_by(inclinacion_peligrosa) %>% summarise(total = n())
+  biggestclass <- classes %>% slice(which.max(total))
+  valor <- as.double(as.vector(biggestclass[1]))
+  dataframe_result <- dataframe %>% mutate(prediction_class = valor)
+  return(dataframe_result)
+}
+
+#5.b
+data_validation <- biggerclass_classifier(data_test, data_train)
+
+#Calcula los elementos de la matriz de confunsion, la forma y la imprime.
+truePositive <- data_validation %>% filter(inclinacion_peligrosa == 1 & prediction_class == 1)
+trueNegative <- data_validation %>% filter(inclinacion_peligrosa == 0 & prediction_class == 0)
+falsePositive <- data_validation %>% filter(inclinacion_peligrosa == 0 & prediction_class == 1)
+falseNegative <- data_validation %>% filter(inclinacion_peligrosa == 1 & prediction_class == 0)
+
+TPbiggerclass <- nrow(truePositive)
+TNbiggerclass <- nrow(trueNegative)
+FPbiggerclass <- nrow(falsePositive)
+FNbiggerclass <- nrow(falseNegative)
+
+Matrix <- c(TPbiggerclass, FPbiggerclass, FNbiggerclass, TNbiggerclass)
+dim(Matrix) <- c(2,2)
+colnames(Matrix) <- c("Predicted: Positive"," Predicted: Negative")
+rownames(Matrix) <- c("Actual: Positive","Actual: Negative")
+Matrix
+```
+
+```{r}
+#6
+#calcula la Accuracy, Precision, Sensitivity, Specificity para el clasificador aleatorio del ejercicio 4
+AccuracyRandom <- (TPrandom + TNrandom)/(TPrandom + TNrandom + FPrandom + FNrandom)
+precisionRandom <- TPrandom/(TPrandom + FPrandom)
+SensitivityRandom <- TPrandom/(TPrandom + FNrandom)
+SpecificityRandom <- TNrandom/(TNrandom + FPrandom)
+
+a <- "Ejercicio 4"
+a
+AccuracyRandom
+precisionRandom
+SensitivityRandom
+SpecificityRandom
+
+#calcula la Accuracy, Precision, Sensitivity, Specificity para el bigger class del ejercicio 5
+AccuracyBiggerclass <- (TPbiggerclass + TNbiggerclass)/(TPbiggerclass + TNbiggerclass + FPbiggerclass + FNbiggerclass)
+precisionBiggerclass <- TPbiggerclass/(TPbiggerclass + FPbiggerclass)
+SensitivityBiggerclass <- TPbiggerclass/(TPbiggerclass + FNbiggerclass)
+SpecificityBiggerclass <- TNbiggerclass/(TNbiggerclass + FPbiggerclass)
+
+a <- "Ejercicio 5"
+a
+AccuracyBiggerclass
+precisionBiggerclass
+SensitivityBiggerclass
+SpecificityBiggerclass
+```
+
+```{r}
+set.seed(2021)
+#EJERCICIO 7
+#crea los dobles y guarda los indices de los elmentos de esas particiones en listas y guarda esas listas en una lista y la devuelve 
+create_folds <- function(dataframe, Nfolds){
+  LonFolds <- ceiling(nrow(dataframe)/Nfolds)
+  Lista <- list()
+  folds <- split(dataframe[1], sample(rep(1:Nfolds,LonFolds)))
+  
+  for (x in 1:Nfolds){
+      Lista <- append(Lista, c(folds[x]))
+  }
+  return(Lista)
+}
+
+#utiliza los dobles creado por la funcion anterior y hace el cross validation con arboles de decision, para esto agarra un doble y lo utiliza como testeo usando el resto como entrenamiento, hace los mismo con cada uno de los dobles, usando el algoritmo de arbol de decision n veces, n siendo el numero de dobles
+cross_validation <- function(dataframe, Nfolds){
+  folds <- create_folds(dataframe, Nfolds)
+  #crea listas para guardar las metricas correspondientes en cada bucle de arvol de decision 
+  ListAccu <- c()
+  ListPrec <- c()
+  ListSens <- c()
+  ListSpec <- c()
+  
+  #bucle for para el cross validation
+  for (x in 1:Nfolds){
+    train <- dataframe[-unlist(folds[x]),]
+    validation <- dataframe[unlist(folds[x]),]
+    
+    train <-train %>% mutate(inclinacion_peligrosa=ifelse(inclinacion_peligrosa=='1','si','no'))
+    train$inclinacion_peligrosa <-as.factor(train$inclinacion_peligrosa)
+    
+    validation <- validation %>% mutate(inclinacion_peligrosa=ifelse(inclinacion_peligrosa=='1','si','no'))
+    validation$inclinacion_peligrosa <-as.factor(validation$inclinacion_peligrosa)
+    
+    train_formula <- formula(inclinacion_peligrosa~ altura + circ_tronco_cm + lat + long)
+    tree_model <- rpart(train_formula, train)
+    
+    prediction <- predict(tree_model, validation, type='prob')
+    prediction_normal <- ifelse(prediction[,2] >=0.5,'si','no')
+    resultados_validation<-data.frame(inclinacion_peligrosa=prediction_normal)
+    
+    #Toma las metricas de la matriz de consunsion y la guarda en las listas
+    Matriz <- confusionMatrix(as.factor(resultados_validation$inclinacion_peligrosa), as.factor(validation$inclinacion_peligrosa))
+    ListAccu <- append(ListAccu, Matriz$overall["Accuracy"])
+    ListPrec <- append(ListPrec, Matriz$byClass["Precision"])
+    ListSens <- append(ListSens, Matriz$byClass["Sensitivity"])
+    ListSpec <- append(ListSpec, Matriz$byClass["Specifitivy"])
+  }
+  #calcula las medias y derivadas estandar de las metricas y las imprime
+  print("Medias:")
+  print("Accuracy: ")
+  print(mean(ListAccu))
+  
+  print("Precision: ")
+  print(mean(ListPrec))
+  
+  print("Sensitivity: ")
+  print(mean(ListSens))
+  
+  print("Specifitivy: ")
+  print(mean(ListSpec))
+  
+  print("")
+  
+  print("Desviaciones Estandar: ")
+  print("Accuracy: ")
+  print(sd(ListAccu))
+  
+  print("Precision: ")
+  print(sd(ListPrec))
+  
+  print("Sensitivity: ")
+  print(sd(ListSens))
+  
+  print("Specifitivy: ")
+  print(sd(ListSpec))
+  
+}
+
+cross_validation(dataset_trees,10)
+```
+
