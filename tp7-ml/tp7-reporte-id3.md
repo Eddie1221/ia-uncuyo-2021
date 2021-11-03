@@ -8,10 +8,10 @@ Carlos Pérez, 13245
 
 1) **Resultados de la evaluación del algoritmo sobre el dataset tennis.csv**
 
-![](Aspose.Words.dbe1ab4b-e09e-48f9-bab0-5baf70156029.001.png)
+![image](https://user-images.githubusercontent.com/88392382/140009259-dee18948-8068-4824-81be-2390ba5b6583.png)
 
 
-Un árbol de decisión maneja variables de tipo real (o variables continuas) en 2 casos:
+2) Un árbol de decisión maneja variables de tipo real (o variables continuas) en 2 casos:
 
 **Si hay variables continuas en los atributos de entrada:**
 
