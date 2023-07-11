@@ -4,7 +4,10 @@ import sys
 from pygame.math import Vector2
 
 class SNAKE:
-    def __init__(self) -> None:
+    def __init__(self, cell_num, cell_size, screen):
+        self.cell_num = cell_num
+        self.cell_size = cell_size
+        self.screen = screen
         self.body = [Vector2(7,10), Vector2(6,10), Vector2(5,10)]
         self.direction = Vector2(1,0)
         self.newBlock = False
@@ -12,9 +15,9 @@ class SNAKE:
     def draw_snake(self):
         for block in self.body:
             #crear rectangulo
-            block_rect = pg.Rect(block.x*cell_size, block.y*cell_size, cell_size, cell_size)
+            block_rect = pg.Rect(block.x*self.cell_size, block.y*self.cell_size, self.cell_size, self.cell_size)
             #dibujar el rectangulo
-            pg.draw.rect(screen, pg.Color('green'), block_rect)
+            pg.draw.rect(self.screen, pg.Color('green'), block_rect)
             
     def move_snake(self):
         if self.newBlock == False:
@@ -30,27 +33,35 @@ class SNAKE:
     def add_block(self):
         self.newBlock = True
 
+
 class FRUIT:
-    def __init__(self):
+    def __init__(self, cell_num, cell_size, screen):
+        self.cell_num = cell_num
+        self.cell_size = cell_size
+        self.screen = screen
         self.randomize()
         
     #dibujar un cuadradro (la fruta)    
     def draw_fruit(self):
         #crear un rectangulo
-        fruit_rect = pg.Rect(self.pos.x*cell_size, self.pos.y*cell_size, cell_size, cell_size)
+        fruit_rect = pg.Rect(self.pos.x*self.cell_size, self.pos.y*self.cell_size, self.cell_size, self.cell_size)
         #dibujar el recangulo
-        pg.draw.rect(screen, pg.Color('red'), fruit_rect)
+        pg.draw.rect(self.screen, pg.Color('red'), fruit_rect)
         
     def randomize(self):
         #crear posicion de la fruta
-        self.x = random.randint(0,cell_num-1)
-        self.y = random.randint(0,cell_num-1)
+        self.x = random.randint(0,self.cell_num-1)
+        self.y = random.randint(0,self.cell_num-1)
         self.pos = Vector2(self.x, self.y)
 
 class BOARD:
-    def __init__(self) -> None:
-        self.snake = SNAKE()
-        self.fruit = FRUIT()
+    def __init__(self, cell_num, cell_size, screen, font) -> None:
+        self.cell_num = cell_num
+        self.cell_size = cell_size
+        self.screen = screen
+        self.font = font
+        self.snake = SNAKE(cell_num, cell_size, screen)
+        self.fruit = FRUIT(cell_num, cell_size, screen)
 
     def update(self):
         self.snake.move_snake()
@@ -81,11 +92,11 @@ class BOARD:
     def check_fail(self):
         #CHECK PARA CHOQUE EN LAS PAREDES
         #check para saber si la cabeza golpea la paredes laterales
-        if not (0 <= self.snake.body[0].x < cell_num):
+        if not (0 <= self.snake.body[0].x < self.cell_num):
             self.game_over()
             
         #check para saber si la cabeza golpea la paredes superior e inferior
-        if not (0 <= self.snake.body[0].y < cell_num):
+        if not (0 <= self.snake.body[0].y < self.cell_num):
             self.game_over()
             
         #CHECK PARA CHOQUE CONTRA EL CUERPO DE LA SERPIENTE
@@ -95,49 +106,59 @@ class BOARD:
                 
     def draw_score(self):
         score_text = str((len(self.snake.body)-3)*10)
-        score_surface = game_font.render(score_text,False,pg.Color('white'))
+        score_surface = self.font.render(score_text,False,pg.Color('white'))
         score_x = 20
-        score_y = cell_size * cell_num - 40
+        score_y = self.cell_size * self.cell_num - 40
         score_rect = score_surface.get_rect(topleft = (score_x,score_y))
-        screen.blit(score_surface,score_rect)
-            
-pg.init()
-cell_size = 40
-cell_num = 20
-game_font = pg.font.Font(None,25)
-screen = pg.display.set_mode((cell_num*cell_size,cell_num*cell_size))
-clock = pg.time.Clock()
+        self.screen.blit(score_surface,score_rect)
 
-tablero = BOARD()
 
-SCREEN_UPDATE = pg.USEREVENT
-pg.time.set_timer(SCREEN_UPDATE, 150)
+#Se encerró el proceso de correr el juego en la clase GAME
+class GAME:
+    def run_game(self):     
+        pg.init()
+        cell_size = 40
+        cell_num = 20
+        game_font = pg.font.Font(None,25)
+        screen = pg.display.set_mode((cell_num*cell_size,cell_num*cell_size))
+        clock = pg.time.Clock()
 
-#En este bucle se dibujan todos los elementos por pantalla
-while True:
-    
-    #Para cerrar el juego se necesita un "event loop" que detecte cuando se cierre la ventana
-    for event in pg.event.get():
-        #detecta cuando se cierre la ventana
-        if event.type == pg.QUIT:
-            pg.quit()
-            sys.exit()
+        tablero = BOARD(cell_num, cell_size, screen, game_font,)
+
+        SCREEN_UPDATE = pg.USEREVENT
+        pg.time.set_timer(SCREEN_UPDATE, 150)
+
+        #En este bucle se dibujan todos los elementos por pantalla
+        while True:
+
+            #Para cerrar el juego se necesita un "event loop" que detecte cuando se cierre la ventana
+            for event in pg.event.get():
+                #detecta cuando se cierre la ventana
+                if event.type == pg.QUIT:
+                    pg.quit()
+                    sys.exit()
+
+                if event.type == SCREEN_UPDATE:
+                    tablero.update()
+
+                #Cambiar la dirección de la serpiente
+                if event.type == pg.KEYDOWN:
+                    if event.key == pg.K_UP and tablero.snake.body[1] != tablero.snake.body[0] + Vector2(0,-1):
+                        tablero.snake.direction = Vector2(0,-1)
+                    if event.key == pg.K_DOWN and tablero.snake.body[1] != tablero.snake.body[0] + Vector2(0,1):
+                        tablero.snake.direction = Vector2(0,1)
+                    if event.key == pg.K_LEFT and tablero.snake.body[1] != tablero.snake.body[0] + Vector2(-1,0):
+                        tablero.snake.direction = Vector2(-1,0)
+                    if event.key == pg.K_RIGHT and tablero.snake.body[1] != tablero.snake.body[0] + Vector2(1,0):
+                        tablero.snake.direction = Vector2(1,0)
+
+
+            screen.fill(pg.Color('black'))
+            tablero.draw_elements()  
+            pg.display.update()
+            clock.tick(60)  #ajusta el framerate maximo a 60
             
-        if event.type == SCREEN_UPDATE:
-            tablero.update()
             
-        #Cambiar la dirección de la serpiente
-        if event.type == pg.KEYDOWN:
-            if event.key == pg.K_UP and tablero.snake.body[1] != tablero.snake.body[0] + Vector2(0,-1):
-                tablero.snake.direction = Vector2(0,-1)
-            if event.key == pg.K_DOWN and tablero.snake.body[1] != tablero.snake.body[0] + Vector2(0,1):
-                tablero.snake.direction = Vector2(0,1)
-            if event.key == pg.K_LEFT and tablero.snake.body[1] != tablero.snake.body[0] + Vector2(-1,0):
-                tablero.snake.direction = Vector2(-1,0)
-            if event.key == pg.K_RIGHT and tablero.snake.body[1] != tablero.snake.body[0] + Vector2(1,0):
-                tablero.snake.direction = Vector2(1,0)
-                
-    screen.fill(pg.Color('black'))
-    tablero.draw_elements()  
-    pg.display.update()
-    clock.tick(60)  #ajusta el framerate maximo a 60
+juego = GAME()
+
+juego.run_game()
