@@ -123,7 +123,7 @@ class GAME:
         screen = pg.display.set_mode((cell_num*cell_size,cell_num*cell_size))
         clock = pg.time.Clock()
 
-        tablero = BOARD(cell_num, cell_size, screen, game_font,)
+        self.tablero = BOARD(cell_num, cell_size, screen, game_font,)
 
         SCREEN_UPDATE = pg.USEREVENT
         pg.time.set_timer(SCREEN_UPDATE, 150)
@@ -139,24 +139,42 @@ class GAME:
                     sys.exit()
 
                 if event.type == SCREEN_UPDATE:
-                    tablero.update()
+                    self.tablero.update()
 
                 #Cambiar la dirección de la serpiente
                 if event.type == pg.KEYDOWN:
-                    if event.key == pg.K_UP and tablero.snake.body[1] != tablero.snake.body[0] + Vector2(0,-1):
-                        tablero.snake.direction = Vector2(0,-1)
-                    if event.key == pg.K_DOWN and tablero.snake.body[1] != tablero.snake.body[0] + Vector2(0,1):
-                        tablero.snake.direction = Vector2(0,1)
-                    if event.key == pg.K_LEFT and tablero.snake.body[1] != tablero.snake.body[0] + Vector2(-1,0):
-                        tablero.snake.direction = Vector2(-1,0)
-                    if event.key == pg.K_RIGHT and tablero.snake.body[1] != tablero.snake.body[0] + Vector2(1,0):
-                        tablero.snake.direction = Vector2(1,0)
+                    if event.key == pg.K_UP:
+                        self.move_up()
+                    if event.key == pg.K_DOWN:
+                        self.move_down()
+                    if event.key == pg.K_LEFT:
+                        self.move_left()
+                    if event.key == pg.K_RIGHT:
+                        self.move_right()
 
 
             screen.fill(pg.Color('black'))
-            tablero.draw_elements()  
+            self.tablero.draw_elements()  
             pg.display.update()
             clock.tick(60)  #ajusta el framerate maximo a 60
+            
+            
+    #Funciones de movimientos, para que el agente pueda llamarlas al jugar al snake
+    def move_up(self):
+        if self.tablero.snake.body[1] != self.tablero.snake.body[0] + Vector2(0,-1):
+            self.tablero.snake.direction = Vector2(0,-1)
+            
+    def move_down(self):
+        if self.tablero.snake.body[1] != self.tablero.snake.body[0] + Vector2(0,1):
+            self.tablero.snake.direction = Vector2(0,1)
+            
+    def move_left(self):
+        if self.tablero.snake.body[1] != self.tablero.snake.body[0] + Vector2(-1,0):
+            self.tablero.snake.direction = Vector2(-1,0)
+    
+    def move_right(self):
+        if self.tablero.snake.body[1] != self.tablero.snake.body[0] + Vector2(1,0):
+            self.tablero.snake.direction = Vector2(1,0)
             
             
 juego = GAME()
