@@ -5,3 +5,4 @@
 5. https://aamrani1999.medium.com/a-gentle-introduction-to-reinforcement-learning-d26cba6455f7
 6. https://towardsdatascience.com/q-learning-algorithm-from-explanation-to-implementation-cdbeda2ea187
 7. https://www.simplilearn.com/tutorials/machine-learning-tutorial/what-is-q-learning
+8. https://www.geeksforgeeks.org/ai-driven-snake-game-using-deep-q-learning/
