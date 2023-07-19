@@ -1,6 +1,5 @@
 import pygame as pg
 import random
-import sys
 from pygame.math import Vector2
 
 class SNAKE:
@@ -8,7 +7,7 @@ class SNAKE:
         self.cell_num = cell_num
         self.cell_size = cell_size
         self.screen = screen
-        self.body = [Vector2(7,10), Vector2(6,10), Vector2(5,10)]
+        self.body = [Vector2(7,10), Vector2(6,10)]
         self.direction = Vector2(1,0)
         self.newBlock = False
         
@@ -87,7 +86,7 @@ class BOARD:
             
     def game_over(self):
         pg.quit()
-        sys.exit()
+        quit()
         
     def check_fail(self):
         #CHECK PARA CHOQUE EN LAS PAREDES
@@ -112,52 +111,86 @@ class BOARD:
         score_rect = score_surface.get_rect(topleft = (score_x,score_y))
         self.screen.blit(score_surface,score_rect)
 
-
 #Se encerró el proceso de correr el juego en la clase GAME
 class GAME:
-    def run_game(self):     
+    def __init__(self) -> None:
+        self.human = True
+        self.tablero = None
+    
+    def run_game(self):    
         pg.init()
-        cell_size = 40
-        cell_num = 20
+        cell_size = 30
+        cell_num = 30
         game_font = pg.font.Font(None,25)
-        screen = pg.display.set_mode((cell_num*cell_size,cell_num*cell_size))
-        clock = pg.time.Clock()
+        self.screen = pg.display.set_mode((cell_num*cell_size,cell_num*cell_size))
+        self.clock = pg.time.Clock()
 
-        self.tablero = BOARD(cell_num, cell_size, screen, game_font,)
+        self.tablero = BOARD(cell_num, cell_size, self.screen, game_font,)
 
-        SCREEN_UPDATE = pg.USEREVENT
-        pg.time.set_timer(SCREEN_UPDATE, 150)
+        if self.human == True:
+            SCREEN_UPDATE = pg.USEREVENT
+            pg.time.set_timer(SCREEN_UPDATE, 150)
 
-        #En este bucle se dibujan todos los elementos por pantalla
-        while True:
+            #En este bucle se dibujan todos los elementos por pantalla
+            while True:
 
-            #Para cerrar el juego se necesita un "event loop" que detecte cuando se cierre la ventana
-            for event in pg.event.get():
-                #detecta cuando se cierre la ventana
-                if event.type == pg.QUIT:
-                    pg.quit()
-                    sys.exit()
+                #Para cerrar el juego se necesita un "event loop" que detecte cuando se cierre la ventana
+                for event in pg.event.get():
+                    #detecta cuando se cierre la ventana
+                    if event.type == pg.QUIT:
+                        pg.quit()
+                        quit()
 
-                if event.type == SCREEN_UPDATE:
-                    self.tablero.update()
+                    if event.type == SCREEN_UPDATE:
+                        self.tablero.update()
 
-                #Cambiar la dirección de la serpiente
-                if event.type == pg.KEYDOWN:
-                    if event.key == pg.K_UP:
-                        self.move_up()
-                    if event.key == pg.K_DOWN:
-                        self.move_down()
-                    if event.key == pg.K_LEFT:
-                        self.move_left()
-                    if event.key == pg.K_RIGHT:
-                        self.move_right()
+                    #Cambiar la dirección de la serpiente
+                    if event.type == pg.KEYDOWN:
+                        if event.key == pg.K_UP:
+                            self.move_up()
+                        if event.key == pg.K_DOWN:
+                            self.move_down()
+                        if event.key == pg.K_LEFT:
+                            self.move_left()
+                        if event.key == pg.K_RIGHT:
+                            self.move_right()
 
 
-            screen.fill(pg.Color('black'))
+                self.screen.fill(pg.Color('black'))
+                self.tablero.draw_elements()  
+                pg.display.update()
+                self.clock.tick(60)  #ajusta el framerate maximo a 60   
+        else:
+            self.tablero.update()
+            self.screen.fill(pg.Color('black'))
             self.tablero.draw_elements()  
             pg.display.update()
-            clock.tick(60)  #ajusta el framerate maximo a 60
-            
+            self.clock.tick(60)  #ajusta el framerate maximo a 60   
+    
+    #Función que le permite al agente realizar una acción en el juego
+    def jugada(self, action):
+        
+        for event in pg.event.get():
+            #detecta cuando se cierre la ventana
+            if event.type == pg.QUIT:
+                pg.quit()
+                quit()
+        
+        match action:
+            case 0: #Izquierda
+                self.move_left()
+            case 1: #Derecha
+                self.move_right()
+            case 2: #Arriba
+                self.move_up()
+            case 3: #Abajo
+                self.move_down()
+                
+        self.tablero.update()
+        self.screen.fill(pg.Color('black'))
+        self.tablero.draw_elements()  
+        pg.display.update()
+        self.clock.tick(20)  #ajusta el framerate maximo a 60
             
     #Funciones de movimientos, para que el agente pueda llamarlas al jugar al snake
     def move_up(self):
@@ -175,8 +208,3 @@ class GAME:
     def move_right(self):
         if self.tablero.snake.body[1] != self.tablero.snake.body[0] + Vector2(1,0):
             self.tablero.snake.direction = Vector2(1,0)
-            
-            
-juego = GAME()
-
-juego.run_game()
