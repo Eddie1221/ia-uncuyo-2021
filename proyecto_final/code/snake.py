@@ -7,9 +7,14 @@ class SNAKE:
         self.cell_num = cell_num
         self.cell_size = cell_size
         self.screen = screen
-        self.body = [Vector2(7,10), Vector2(6,10)]
-        self.direction = Vector2(1,0)
+        self.isDeath = False
+        self.randomize()
         self.newBlock = False
+        
+    def randomize(self):
+        self.body = [Vector2(random.randint(3,self.cell_num-3), random.randint(3,self.cell_num-3))]
+        self.direction = random.choice([Vector2(1,0), Vector2(-1,0), Vector2(0,1), Vector2(0,-1)])
+        self.body.append(self.body[0]-self.direction)
         
     def draw_snake(self):
         for block in self.body:
@@ -85,8 +90,7 @@ class BOARD:
                 self.fruit.randomize()
             
     def game_over(self):
-        pg.quit()
-        quit()
+        self.snake.isDeath = True
         
     def check_fail(self):
         #CHECK PARA CHOQUE EN LAS PAREDES
@@ -104,7 +108,7 @@ class BOARD:
                 self.game_over()
                 
     def draw_score(self):
-        score_text = str((len(self.snake.body)-3)*10)
+        score_text = str((len(self.snake.body)-2)*10)
         score_surface = self.font.render(score_text,False,pg.Color('white'))
         score_x = 20
         score_y = self.cell_size * self.cell_num - 40
@@ -119,7 +123,7 @@ class GAME:
     
     def run_game(self):    
         pg.init()
-        cell_size = 30
+        cell_size = 20
         cell_num = 30
         game_font = pg.font.Font(None,25)
         self.screen = pg.display.set_mode((cell_num*cell_size,cell_num*cell_size))
@@ -143,6 +147,8 @@ class GAME:
 
                     if event.type == SCREEN_UPDATE:
                         self.tablero.update()
+                        if self.tablero.snake.isDeath == True:
+                            pg.quit()
 
                     #Cambiar la dirección de la serpiente
                     if event.type == pg.KEYDOWN:
@@ -186,11 +192,15 @@ class GAME:
             case 3: #Abajo
                 self.move_down()
                 
-        self.tablero.update()
-        self.screen.fill(pg.Color('black'))
-        self.tablero.draw_elements()  
-        pg.display.update()
-        self.clock.tick(20)  #ajusta el framerate maximo a 60
+        #print(self.tablero.snake.isDeath)
+        if self.tablero.snake.isDeath == False:
+            self.tablero.update()
+            self.screen.fill(pg.Color('black'))
+            self.tablero.draw_elements()  
+            pg.display.update()
+            self.clock.tick(500)  #ajusta el framerate maximo
+        else:
+            pg.quit()
             
     #Funciones de movimientos, para que el agente pueda llamarlas al jugar al snake
     def move_up(self):
