@@ -13,7 +13,7 @@ class AGENT:
         self.exploration_chance = 1.0
         self.exploration_decrease = 0.995
         self.min_exploration = 0.001
-        self.num_episodes = 3000
+        self.num_episodes = 500
         self.qtable = self.LoadQtable()
         self.score = []
         
@@ -37,32 +37,24 @@ class AGENT:
     
     #Funcion que informa de los peligros inmediatos a la cabeza de la serpiente
     def detectDanger(self, tablero, serpiente):
-        danger = ["N","N","N","N"]
+        danger = [0,0,0,0]
         cabeza = serpiente.body[0]
         
         #Peligro a la izquierda 
-        if cabeza.x-1 == 0:
-            danger[0] = "P"
-        elif Vector2(cabeza.x-1,cabeza.y) in serpiente.body[1:]:
-            danger[0] = "C"
+        if cabeza.x-1 == 0 or Vector2(cabeza.x-1,cabeza.y) in serpiente.body[1:]:
+            danger[0] = 1
             
         #Peligro a la derecha 
-        if cabeza.x+1 == tablero.cell_num-1:
-            danger[1] = "P"
-        elif Vector2(cabeza.x+1,cabeza.y) in serpiente.body[1:]:
-            danger[0] = "C"
+        if cabeza.x+1 == tablero.cell_num-1 or Vector2(cabeza.x+1,cabeza.y) in serpiente.body[1:]:
+            danger[1] = 1
 
         #Peligro arriba
-        if cabeza.y-1 == 0:
-            danger[2] = "P"
-        elif Vector2(cabeza.x,cabeza.y-1) in serpiente.body[1:]:
-            danger[0] = "C"
+        if cabeza.y-1 == 0 or Vector2(cabeza.x,cabeza.y-1) in serpiente.body[1:]:
+            danger[2] = 1
             
         #Peligro abajo
-        if cabeza.y+1 == tablero.cell_num-1:
-            danger[3] = "P"
-        elif Vector2(cabeza.x,cabeza.y+1) in serpiente.body[1:]:
-            danger[0] = "C"
+        if cabeza.y+1 == tablero.cell_num-1 or Vector2(cabeza.x,cabeza.y+1) in serpiente.body[1:]:
+            danger[3] = 1
             
         return danger
     
@@ -148,8 +140,28 @@ class AGENT:
                 
                 steps_without_food = steps_without_food + 1 
                 
-            self.SaveQvalues()
             self.score.append(len(snake.body)-2)
+            self.SaveQvalues()   
+        
+        print("Puntaje mas alto: "+str(max(self.score)))    
+        with open('scores.json', 'w') as f:
+            json.dump(self.score, f)
+            
+    def play(self, tries):
+        self.exploration_chance = 0.001
+        for i in range (1,tries+1):
+            self.run_game()
+            snake = self.env.tablero.snake
+            fruit = self.env.tablero.fruit
+            board = self.env.tablero
+            steps_without_food = 0
+            state = self.getState(snake, fruit, board)
+            while (steps_without_food < 1000 and (snake.isDeath == False)):
+                action = self.getAction(state)
+                self.env.jugada(action)
+                new_state = self.getState(snake, fruit, board)
+                state = new_state
+                steps_without_food = steps_without_food + 1 
             
 agent = AGENT()
 

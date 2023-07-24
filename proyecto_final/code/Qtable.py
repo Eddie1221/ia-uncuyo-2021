@@ -4,10 +4,10 @@ import json
 
 #si hay peligro inmediato en las 4 direcciones
 #C = Cuerpo, P = Pared, N = nada
-dangerLEFT = ["C","P","N"]
-dangerRIGHT = ["C","P","N"]
-dangerUP = ["C","P","N"]
-dangerDOWN = ["C","P","N"]
+dangerLEFT = [0,1]
+dangerRIGHT = [0,1]
+dangerUP = [0,1]
+dangerDOWN = [0,1]
 
 #Si la fruta esta a la izquierda o derecha de la cabeza de la serpiente, o se encuentra en la misma posición respecto al eje x
 FrutaHorizontal = ["L", "R", "="]
