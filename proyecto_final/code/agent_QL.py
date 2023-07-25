@@ -8,19 +8,32 @@ class AGENT:
     def __init__(self) -> None:
         self.env = GAME()
         self.env.human = False
+        self.defninirParametros()
+        self.qtable = self.LoadQtable()
+        self.score = []
+        
+    def defninirParametros(self):
+        #Parametros de la ecuacion de Bellman cuando el juego no tiene obstaculos
         self.discount_rate = 0.95
         self.learning_rate = 0.001
         self.exploration_chance = 1.0
         self.exploration_decrease = 0.995
         self.min_exploration = 0.001
-        self.num_episodes = 1000
-        self.qtable = self.LoadQtable()
-        self.score = []
+            
+        #Recompensas
+        self.rewardFruit = 10
+        self.rewardCloser = 1
+        self.rewardFarther = -2
+        self.rewardDeath = -1000
         
-    def run_game(self):
+        #Episodios
+        self.num_episodes = 1000
+        
+        
+    def run_game(self, switchObstacles):
         self.env = GAME()
         self.env.human = False
-        self.env.run_game()
+        self.env.run_game(switchObstacles)
         
     def LoadQtable(self, path="qvalues.json"):
         with open(path, "r") as f:
@@ -57,19 +70,19 @@ class AGENT:
         cabeza = serpiente.body[0]
         
         #Peligro a la izquierda 
-        if cabeza.x-1 == 0 or Vector2(cabeza.x-1,cabeza.y) in serpiente.body[1:]:
+        if cabeza.x-1 == 0 or Vector2(cabeza.x-1,cabeza.y) in serpiente.body[1:] or Vector2(cabeza.x-1,cabeza.y) in tablero.obst:
             danger[0] = 1
             
         #Peligro a la derecha 
-        if cabeza.x+1 == tablero.cell_num-1 or Vector2(cabeza.x+1,cabeza.y) in serpiente.body[1:]:
+        if cabeza.x+1 == tablero.cell_num-1 or Vector2(cabeza.x+1,cabeza.y) in serpiente.body[1:] or Vector2(cabeza.x+1,cabeza.y) in tablero.obst:
             danger[1] = 1
 
         #Peligro arriba
-        if cabeza.y-1 == 0 or Vector2(cabeza.x,cabeza.y-1) in serpiente.body[1:]:
+        if cabeza.y-1 == 0 or Vector2(cabeza.x,cabeza.y-1) in serpiente.body[1:] or Vector2(cabeza.x,cabeza.y-1) in tablero.obst:
             danger[2] = 1
             
         #Peligro abajo
-        if cabeza.y+1 == tablero.cell_num-1 or Vector2(cabeza.x,cabeza.y+1) in serpiente.body[1:]:
+        if cabeza.y+1 == tablero.cell_num-1 or Vector2(cabeza.x,cabeza.y+1) in serpiente.body[1:] or Vector2(cabeza.x,cabeza.y-1) in tablero.obst:
             danger[3] = 1
             
         return danger
@@ -116,11 +129,11 @@ class AGENT:
         estado = (pos_x, pos_y, danger[0], danger[1], danger[2], danger[3], direction, frutaAdyacente)
         return estado
     
-    def learn(self):
+    def learn(self, switchObstacles):
         #Numero de episodios que el agente jugará para entrenar
         for i in range (1,self.num_episodes+1):
             print("Episodio: "+str(i)+"/"+str(self.num_episodes))
-            self.run_game()
+            self.run_game(switchObstacles)
             snake = self.env.tablero.snake
             fruit = self.env.tablero.fruit
             board = self.env.tablero
@@ -135,18 +148,18 @@ class AGENT:
                 self.env.jugada(action)
                 
                 if snake.isDeath == True:
-                    reward = -1000
+                    reward = self.rewardDeath
                 else:
                     new_snake_length = len(snake.body)
                     if new_snake_length > snake_length:
                         steps_without_food = 0
-                        reward = 10
+                        reward = self.rewardFruit
                     else:
                         new_fruit_distance = self.fruit_distance()
                         if new_fruit_distance > fruit_distance:
-                            reward = -2
+                            reward = self.rewardFarther
                         else:
-                            reward = 1
+                            reward = self.rewardCloser
                             
                 new_state = self.getState(snake, fruit, board)
                 #Formula de Bellman
@@ -163,29 +176,7 @@ class AGENT:
         print("Puntaje mas alto: "+str(max(self.score)))    
         with open('scores.json', 'w') as f:
             json.dump(self.score, f)
-            
-    def play(self, tries):
-        scoreTrained = []
-        self.exploration_chance = 0.001
-        for i in range (1,tries+1):
-            self.run_game()
-            snake = self.env.tablero.snake
-            fruit = self.env.tablero.fruit
-            board = self.env.tablero
-            steps_without_food = 0
-            state = self.getState(snake, fruit, board)
-            while (steps_without_food < 1000 and (snake.isDeath == False)):
-                action = self.getAction(state)
-                self.env.jugada(action)
-                new_state = self.getState(snake, fruit, board)
-                state = new_state
-                steps_without_food = steps_without_food + 1
-                
-            scoreTrained.append(len(snake.body)-2)
-                
-        with open('scoresTrained.json', 'w') as f:
-            json.dump(scoreTrained, f)
-            
+    
+obstaculos = True     
 agent = AGENT()
-
-agent.learn()
+agent.learn(obstaculos)
