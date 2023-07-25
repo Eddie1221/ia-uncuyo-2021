@@ -6,7 +6,7 @@ class AGENT_RAND:
     def __init__(self) -> None:
         self.env = GAME()
         self.env.human = False
-        self.num_episodes = 700
+        self.num_episodes = 1000
         self.score = []
         
     def run_game(self):

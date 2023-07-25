@@ -59,13 +59,59 @@ class FRUIT:
         self.pos = Vector2(self.x, self.y)
 
 class BOARD:
-    def __init__(self, cell_num, cell_size, screen, font) -> None:
+    def __init__(self, cell_num, cell_size, screen, font, obstSWITCH) -> None:
         self.cell_num = cell_num
         self.cell_size = cell_size
         self.screen = screen
         self.font = font
+        self.obst = []
+        if obstSWITCH == True:
+            self.obst = self.generateObstacles()
+            
         self.snake = SNAKE(cell_num, cell_size, screen)
+        switch = True
+        while switch == True:
+            switch = False
+            for block in self.snake.body:
+                if block in self.obst:
+                    switch = True
+                    
+            if switch == True:
+                self.snake.randomize()
+        
         self.fruit = FRUIT(cell_num, cell_size, screen)
+        switch = True
+        while switch == True:
+            if self.fruit.pos in self.obst:
+                switch = True
+                self.fruit.randomize()
+            else:
+                switch = False
+            
+    def generateObstacles(self):
+        obstacles = []
+        for y in range(1,self.cell_num-1):
+            for x in range(1,self.cell_num-1):
+                if random.random() < 0.02:
+                    if self.cheackObstacle(x,y, obstacles) == False:
+                        obstacles.append(Vector2(x,y))
+                    
+        return obstacles
+    
+    #Funcion para asegurar que no hayan osbtaculos adyacentes
+    def cheackObstacle(self, x, y, obstacles):
+        surroundings = False
+        
+        if Vector2(x,y-1) in obstacles:
+            surroundings = True
+        if Vector2(x-1,y-1) in obstacles:
+            surroundings = True
+        if Vector2(x+1,y-1) in obstacles:
+            surroundings = True
+        if Vector2(x-1,y) in obstacles:
+            surroundings = True
+            
+        return surroundings
 
     def update(self):
         self.snake.move_snake()
@@ -75,12 +121,20 @@ class BOARD:
     def draw_elements(self):
         self.fruit.draw_fruit()
         self.snake.draw_snake()
+        self.draw_obstacles()
         self.draw_score()
         
     def check_collision(self):
         if self.fruit.pos == self.snake.body[0]:
             #Reposicionar la fruta
             self.fruit.randomize()
+            switch = True
+            while switch == True:
+                if self.fruit.pos in self.obst:
+                    switch = True
+                    self.fruit.randomize()
+                else:
+                    switch = False
             
             #Crecer la serpiente
             self.snake.add_block()
@@ -102,6 +156,10 @@ class BOARD:
         if not (0 <= self.snake.body[0].y < self.cell_num):
             self.game_over()
             
+        #CHEACK PARA CHOQUE CON OBSTACULOS
+        if self.snake.body[0] in self.obst:
+            self.game_over()
+            
         #CHECK PARA CHOQUE CONTRA EL CUERPO DE LA SERPIENTE
         for block in self.snake.body[1:]:
             if block == self.snake.body[0]:
@@ -114,6 +172,14 @@ class BOARD:
         score_y = self.cell_size * self.cell_num - 40
         score_rect = score_surface.get_rect(topleft = (score_x,score_y))
         self.screen.blit(score_surface,score_rect)
+        
+    def draw_obstacles(self):
+        for block in self.obst:
+            #crear rectangulo
+            block_rect = pg.Rect(block.x*self.cell_size, block.y*self.cell_size, self.cell_size, self.cell_size)
+            #dibujar el rectangulo
+            pg.draw.rect(self.screen, pg.Color('blue'), block_rect)
+        
 
 #Se encerró el proceso de correr el juego en la clase GAME
 class GAME:
@@ -121,7 +187,7 @@ class GAME:
         self.human = True
         self.tablero = None
     
-    def run_game(self):    
+    def run_game(self, switchObstacles):    
         pg.init()
         cell_size = 20
         cell_num = 30
@@ -129,7 +195,7 @@ class GAME:
         self.screen = pg.display.set_mode((cell_num*cell_size,cell_num*cell_size))
         self.clock = pg.time.Clock()
 
-        self.tablero = BOARD(cell_num, cell_size, self.screen, game_font,)
+        self.tablero = BOARD(cell_num, cell_size, self.screen, game_font, switchObstacles)
 
         if self.human == True:
             SCREEN_UPDATE = pg.USEREVENT
@@ -161,11 +227,13 @@ class GAME:
                         if event.key == pg.K_RIGHT:
                             self.move_right()
 
-
-                self.screen.fill(pg.Color('black'))
-                self.tablero.draw_elements()  
-                pg.display.update()
-                self.clock.tick(60)  #ajusta el framerate maximo a 60   
+                if self.tablero.snake.isDeath == False:
+                    self.screen.fill(pg.Color('black'))
+                    self.tablero.draw_elements()  
+                    pg.display.update()
+                    self.clock.tick(60)  #ajusta el framerate maximo a 60
+                else:
+                    pg.quit()
         else:
             self.tablero.update()
             self.screen.fill(pg.Color('black'))
