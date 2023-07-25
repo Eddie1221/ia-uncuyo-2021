@@ -11,11 +11,12 @@ class AGENT:
         self.defninirParametros()
         self.qtable = self.LoadQtable()
         self.score = []
+        self.moves = []
         
     def defninirParametros(self):
         #Parametros de la ecuacion de Bellman cuando el juego no tiene obstaculos
         self.discount_rate = 0.95
-        self.learning_rate = 0.001
+        self.learning_rate = 0.01
         self.exploration_chance = 1.0
         self.exploration_decrease = 0.995
         self.min_exploration = 0.001
@@ -138,6 +139,7 @@ class AGENT:
             fruit = self.env.tablero.fruit
             board = self.env.tablero
             steps_without_food = 0
+            moves = 0
             state = self.getState(snake, fruit, board)
             self.exploration_chance = max(self.exploration_chance * self.exploration_decrease, self.min_exploration)
             while (steps_without_food < 1000 and (snake.isDeath == False)):
@@ -146,6 +148,7 @@ class AGENT:
                 fruit_distance = self.fruit_distance()
                 action = self.getAction(state)
                 self.env.jugada(action)
+                moves = moves + 1
                 
                 if snake.isDeath == True:
                     reward = self.rewardDeath
@@ -171,11 +174,15 @@ class AGENT:
                 steps_without_food = steps_without_food + 1 
                 
             self.score.append(len(snake.body)-2)
+            self.moves.append(moves)
             self.SaveQvalues()   
         
         print("Puntaje mas alto: "+str(max(self.score)))    
         with open('scores.json', 'w') as f:
             json.dump(self.score, f)
+            
+        with open('moves.json', 'w') as f:
+            json.dump(self.moves, f)
     
 obstaculos = True     
 agent = AGENT()
