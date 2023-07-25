@@ -9,11 +9,11 @@ class AGENT:
         self.env = GAME()
         self.env.human = False
         self.discount_rate = 0.95
-        self.learning_rate = 0.01
+        self.learning_rate = 0.001
         self.exploration_chance = 1.0
         self.exploration_decrease = 0.995
         self.min_exploration = 0.001
-        self.num_episodes = 500
+        self.num_episodes = 1000
         self.qtable = self.LoadQtable()
         self.score = []
         
@@ -34,6 +34,22 @@ class AGENT:
     #Calcula la distancia en bloques desde la cabeza de la serpiente hasta la fruta.
     def fruit_distance(self):
         return abs(self.env.tablero.snake.body[0].x - self.env.tablero.fruit.x) + abs(self.env.tablero.snake.body[0].y - self.env.tablero.fruit.y)
+    
+    #Funcion que informa si hay algun afruta adyacente a la cabeza de la serpiente
+    def detectFruta(self, fruta, serpiente):
+        frutaAdyacente = "-"
+        cabeza = serpiente.body[0]
+        
+        if cabeza.x-1 == fruta.pos.x and cabeza.y == fruta.pos.y:
+            frutaAdyacente = "L"
+        elif cabeza.x+1 == fruta.pos.x and cabeza.y == fruta.pos.y:
+            frutaAdyacente = "R"
+        elif cabeza.y-1 == fruta.pos.y and cabeza.x == fruta.pos.x:
+            frutaAdyacente = "U"
+        elif cabeza.y-1 == fruta.pos.y and cabeza.x == fruta.pos.x:
+            frutaAdyacente = "D"
+            
+        return frutaAdyacente
     
     #Funcion que informa de los peligros inmediatos a la cabeza de la serpiente
     def detectDanger(self, tablero, serpiente):
@@ -67,6 +83,7 @@ class AGENT:
             
     def getState(self, serpiente, fruta, tablero):
         danger = self.detectDanger(tablero, serpiente)
+        frutaAdyacente = self.detectFruta(fruta, serpiente)
         cabeza = serpiente.body[0]
         
         dist_x = fruta.x - cabeza.x
@@ -77,12 +94,12 @@ class AGENT:
         elif dist_x > 0:
             pos_x = 'R'
         else:
-            pos_x = '=' 
+            pos_x = '='
             
         if dist_y < 0:
             pos_y = 'U'
         elif dist_y > 0:
-            pos_y = 'D' 
+            pos_y = 'D'
         else:
             pos_y = '='
             
@@ -96,7 +113,7 @@ class AGENT:
         elif serpiente.direction == Vector2(0,1):
             direction = "D"
                 
-        estado = (pos_x, pos_y, danger[0], danger[1], danger[2], danger[3], direction)
+        estado = (pos_x, pos_y, danger[0], danger[1], danger[2], danger[3], direction, frutaAdyacente)
         return estado
     
     def learn(self):
@@ -118,7 +135,7 @@ class AGENT:
                 self.env.jugada(action)
                 
                 if snake.isDeath == True:
-                    reward = -100
+                    reward = -1000
                 else:
                     new_snake_length = len(snake.body)
                     if new_snake_length > snake_length:
@@ -127,7 +144,7 @@ class AGENT:
                     else:
                         new_fruit_distance = self.fruit_distance()
                         if new_fruit_distance > fruit_distance:
-                            reward = -1
+                            reward = -2
                         else:
                             reward = 1
                             
@@ -148,6 +165,7 @@ class AGENT:
             json.dump(self.score, f)
             
     def play(self, tries):
+        scoreTrained = []
         self.exploration_chance = 0.001
         for i in range (1,tries+1):
             self.run_game()
@@ -161,7 +179,12 @@ class AGENT:
                 self.env.jugada(action)
                 new_state = self.getState(snake, fruit, board)
                 state = new_state
-                steps_without_food = steps_without_food + 1 
+                steps_without_food = steps_without_food + 1
+                
+            scoreTrained.append(len(snake.body)-2)
+                
+        with open('scoresTrained.json', 'w') as f:
+            json.dump(scoreTrained, f)
             
 agent = AGENT()
 

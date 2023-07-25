@@ -18,6 +18,9 @@ FrutaHVertical = ["U", "D", "="]
 #Dirección de la serpiente
 Direccion = ["L", "R", "U", "D"]
 
+#Fruta adyacente
+FrutaAdyacente = ["L", "R", "U", "D", "-"]
+
 tabla={}
 
 for a in FrutaHorizontal:
@@ -27,7 +30,8 @@ for a in FrutaHorizontal:
                 for e in dangerUP:
                     for f in dangerDOWN:
                         for g in Direccion:
-                            tabla[str((a,b,c,d,e,f,g))] = [0,0,0,0]
+                            for h in FrutaAdyacente:
+                                tabla[str((a,b,c,d,e,f,g,h))] = [0,0,0,0]
                         
 with open("qvalues.json", "w") as f:
 	json.dump(tabla, f)
