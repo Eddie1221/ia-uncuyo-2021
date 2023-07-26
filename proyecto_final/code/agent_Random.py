@@ -10,17 +10,17 @@ class AGENT_RAND:
         self.score = []
         self.moves = []
         
-    def run_game(self):
+    def run_game(self, obstaculos):
         self.env = GAME()
         self.env.human = False
-        self.env.run_game()
+        self.env.run_game(obstaculos)
         
-    def play(self):
+    def play(self, obstaculos):
         #Numero de episodios que el agente jugará el agente
         for i in range (1,self.num_episodes+1):
             moves = 0
             print("Episodio: "+str(i)+"/"+str(self.num_episodes))
-            self.run_game()
+            self.run_game(obstaculos)
             snake = self.env.tablero.snake
             steps_without_food = 0
             while (steps_without_food < 1000 and (snake.isDeath == False)):
@@ -29,15 +29,14 @@ class AGENT_RAND:
                 steps_without_food = steps_without_food + 1 
                 
             self.score.append(len(snake.body)-2)
-            self.moves.append(moves)
-            self.SaveQvalues()   
+            self.moves.append(moves) 
         
-        with open('scoresRandom.json', 'w') as f:
+        with open('scoresRandom30x30_con_obstaculos.json', 'w') as f:
             json.dump(self.score, f)
             
-        with open('movesRandom.json', 'w') as f:
+        with open('movesRandom30x30_con_obstaculos.json', 'w') as f:
             json.dump(self.moves, f)
             
 agente = AGENT_RAND()
 
-agente.play()
+agente.play(True)
