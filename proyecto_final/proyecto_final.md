@@ -22,7 +22,7 @@ Previo a la implementación de la solución planteada se plasmarán los concepto
 - Acción: Es la elección que el agente toma en un estado dado del entorno según su posición.
 - Política: Es la estrategia de toma de decisiones que el agente, las políticas dictan las acciones que el agente toma en función de su estado y del entorno.
 
-***Aprendizaje Reforzado***
+ ***Aprendizaje Reforzado***
 
 Como su nombre lo indica, el aprendizaje reforzado se basa en el concepto del aprendizaje mediante recompensas, en esta área de estudio la misión del agente es aprender a conseguir estas recompensas en un entorno desconocido. Este concepto de acción y recompensa lleva siendo años estudiado en animales por lo que resulta idóneo planear el juego de ‘snake’ mediante este lente ya que podemos ver claramente qué elementos del juego pueden clasificarse como agente, recompensa y castigo.
 
