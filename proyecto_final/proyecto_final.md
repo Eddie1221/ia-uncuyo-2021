@@ -261,7 +261,8 @@ Figura 4. Puntajes máximos conseguidos por el agente en distintos tamaños de g
 De la misma manera se observa que el puntaje promedio del agente basado en Q-learning aumenta con respecto al tamaño del entorno, mientras que el del agente aleatorio disminuye
 
 Figura 5. Puntaje promedio obtenido por el agente en distintos tamaños de grilla comparado con los puntajes promedios obtenidos por un agente aleatorio.
- ![](imagenes/Aspose.Words.822f330c-6e38-4728-a5de-6ee445430b7b.020.jpeg)
+![](imagenes/Aspose.Words.822f330c-6e38-4728-a5de-6ee445430b7b.020.jpeg)
+ 
 ***Resultado del aprendizaje en un entorno con obstáculos:***
 
 ***Resultados del Q-learning con 1000 episodios de entrenamiento***
@@ -269,7 +270,7 @@ Figura 5. Puntaje promedio obtenido por el agente en distintos tamaños de grill
 El agente presenta dificultades para aprender cuando debe lidiar con obstáculos antes de aprender a moverse dentro del entorno, lo que ocasiona que termine realizando movimientos que aseguren su supervivencia a los que lo acercan a la fruta. Esto ocasiona que el agente llegue al límite de movimientos máximos, acabando el juego con una puntuación de 0 puntos aún en episodios tardíos del entrenamiento.
 
 Figura 6. Puntajes conseguidos por episodio por el agente en una grilla con una probabilidad de 1% obstáculos aleatorios.
- ![](imagenes/Aspose.Words.822f330c-6e38-4728-a5de-6ee445430b7b.021.jpeg)
+![](imagenes/Aspose.Words.822f330c-6e38-4728-a5de-6ee445430b7b.021.jpeg)
 
 
 Se observa un comportamiento similar al caso anterior, con la diferencia de que el rango de puntajes se ve reducido con el aumento del número de obstáculos resultando así en un menor puntaje máximo.
