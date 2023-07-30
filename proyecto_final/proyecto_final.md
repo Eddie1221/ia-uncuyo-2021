@@ -328,10 +328,7 @@ En conclusión los resultados experimentales fueron satisfactorios y acorde con 
 
 1. Snake Played by a Deep Reinforcement Learning Agent [https://towardsdatascience.com/snake-played-by-a-deep-reinforcement-learning-agent-53f2c4 331d36](https://towardsdatascience.com/snake-played-by-a-deep-reinforcement-learning-agent-53f2c4331d36)
 1. Understanding the Markov Decision Process (MDP) <https://builtin.com/machine-learning/markov-decision-process>
-1. Aprendizaje por refuerzo: algoritmo Q-Learning
-
-<http://www.cs.us.es/~fsancho/?e=109>
-
+1. Aprendizaje por refuerzo: algoritmo Q-Learning<http://www.cs.us.es/~fsancho/?e=109>
 4. Introducción al aprendizaje por refuerzo. Parte 3: Q-Learning con redes neuronales, algoritmo DQN. [https://markelsanz14.medium.com/introducci%C3%B3n-al-aprendizaje-por-refuerzo-parte-3- q-learning-con-redes-neuronales-algoritmo-dqn-bfe02b37017f](https://markelsanz14.medium.com/introducci%C3%B3n-al-aprendizaje-por-refuerzo-parte-3-q-learning-con-redes-neuronales-algoritmo-dqn-bfe02b37017f)
 4. What Is Q-Learning: The Best Guide To Understand Q-Learning <https://www.simplilearn.com/tutorials/machine-learning-tutorial/what-is-q-learning>
 4. Teaching a computer how to play Snake with Q-Learning [https://towardsdatascience.com/teaching-a-computer-how-to-play-snake-with-q-learning-93d0 a316ddc0](https://towardsdatascience.com/teaching-a-computer-how-to-play-snake-with-q-learning-93d0a316ddc0)
@@ -340,32 +337,14 @@ En conclusión los resultados experimentales fueron satisfactorios y acorde con 
 4. What Is Q-Learning: The Best Guide To Understand Q-Learning <https://www.simplilearn.com/tutorials/machine-learning-tutorial/what-is-q-learning>
 4. AI Driven Snake Game using Deep Q-Learning <https://www.geeksforgeeks.org/ai-driven-snake-game-using-deep-q-learning/>
 4. Exploration of Reinforcement Learning to SNAKE <http://cs229.stanford.edu/proj2016spr/report/060.pdf>
-4. Neurona de McCulloch-Pitts
-
-<https://es.wikipedia.org/wiki/Neurona_de_McCulloch-Pitts>
-
-13. Red neuronal artificial
-
-<https://es.wikipedia.org/wiki/Red_neuronal_artificial>
-
+4. Neurona de McCulloch-Pitts<https://es.wikipedia.org/wiki/Neurona_de_McCulloch-Pitts>
+13. Red neuronal artificial<https://es.wikipedia.org/wiki/Red_neuronal_artificial>
 14. ¿Qué es una red neuronal? [https://aws.amazon.com/es/what-is/neural-network/#:~:text=Una%20red%20neuronal%20es %20un,lo%20hace%20el%20cerebro%20humano](https://aws.amazon.com/es/what-is/neural-network/#:~:text=Una%20red%20neuronal%20es%20un,lo%20hace%20el%20cerebro%20humano).
-14. About Pygame
-
-<https://www.pygame.org/wiki/about>
-
-16. Keras
-
-<https://es.wikipedia.org/wiki/Keras>
-
+14. About Pygame<https://www.pygame.org/wiki/about>
+16. Keras<https://es.wikipedia.org/wiki/Keras>
 17. The Deep Q-Learning Algorithm <https://huggingface.co/learn/deep-rl-course/unit3/deep-q-algorithm?fw=pt>
-17. Deep Q-Learning
-
-<https://www.geeksforgeeks.org/deep-q-learning/>
-
-19. Deep learning
-
-<https://en.wikipedia.org/wiki/Deep_learning>
-
+17. Deep Q-Learning<https://www.geeksforgeeks.org/deep-q-learning/>
+19. Deep learning<https://en.wikipedia.org/wiki/Deep_learning>
 20. Función de pérdida vs función de activación <https://keepcoding.io/blog/funcion-de-perdida-vs-funcion-de-activacion/>
 20. Descenso de gradiente [https://es.khanacademy.org/math/multivariable-calculus/applications-of-multivariable-derivati ves/optimizing-multivariable-functions/a/what-is-gradient-descent](https://es.khanacademy.org/math/multivariable-calculus/applications-of-multivariable-derivatives/optimizing-multivariable-functions/a/what-is-gradient-descent)
 20. Russel, Stuart. Norvig, Peter. Artificial Intelligence: A Modern Approach. 3era edición, Pearson, 2009.
