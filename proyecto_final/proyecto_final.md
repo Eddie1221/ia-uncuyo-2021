@@ -1,7 +1,7 @@
 ﻿**Snake: Aprendizaje reforzado de un agente basado en Q-learning.**
 
-Carlos Perez Legajo: 13245
-Eduardo Perez Legajo: 13244
+Carlos Perez Legajo: 13245.
+Eduardo Perez Legajo: 13244.
 
 **Introducción**
 
