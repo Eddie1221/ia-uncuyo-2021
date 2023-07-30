@@ -22,7 +22,7 @@ Previo a la implementación de la solución planteada se plasmarán los concepto
 - Acción: Es la elección que el agente toma en un estado dado del entorno según su posición.
 - Política: Es la estrategia de toma de decisiones que el agente, las políticas dictan las acciones que el agente toma en función de su estado y del entorno.
 
-	***Aprendizaje Reforzado***
+  ***Aprendizaje Reforzado***
 
 Como su nombre lo indica, el aprendizaje reforzado se basa en el concepto del aprendizaje mediante recompensas, en esta área de estudio la misión del agente es aprender a conseguir estas recompensas en un entorno desconocido. Este concepto de acción y recompensa lleva siendo años estudiado en animales por lo que resulta idóneo planear el juego de ‘snake’ mediante este lente ya que podemos ver claramente qué elementos del juego pueden clasificarse como agente, recompensa y castigo.
 
@@ -37,7 +37,7 @@ Los algoritmos básicos de aprendizaje reforzado están modelados como un proces
 
 Volviendo al aprendizaje reforzado, el modelado de este como proceso de decisión de Markov está caracterizado por al desconocimiento de las probabilidades o recompensas, por lo que es útil definir una función que permita inferir cual acción debe ser tomada según la política que se tenga, la cual mediante la experiencia del agente nos provea la “calidad” de una acción en un estado dado, es decir llevar registro de la acción que causa que el agente pase del estado s al estado s´ y el resultado de la misma. Estos registros se guardan en una tabla llamada Q-table y nos introduce al concepto de Q-learning.
 
-	***Q-Learning***
+  ***Q-Learning***
 
 El Q-learning es una técnica de aprendizaje reforzado que dado un estado intenta encontrar la siguiente mejor acción basado en un sistema de recompensas que obtiene al interactuar con su entorno. El objetivo del agente es maximizar su recompensa total, esto lo hace sumando la máxima recompensa alcanzable en estados futuros a la recompensa por alcanzar su estado actual. El algoritmo no requiere un modelo de entorno y maneja problemas con transiciones estocásticas.
 
@@ -70,7 +70,7 @@ Los *Q-values* calculados con la ecuación de Bellman son almacenados en una tab
 
 Como se mencionó anteriormente el objetivo secundario del proyecto es comparar la implementación diseñada del algoritmo de Q-learning, con la resolución basada en Deep Q-learning provista por el artículo ya mencionado, por lo tanto estudiaremos superficialmente el marco teórico en el cual está fundamentado en parte debido a que el aprendizaje profundo es una área de estudio muy extensa que sobrepasa los objetivos de la investigación propuesta.
 
-***Deep learning y Redes Neuronales***
+  ***Deep learning y Redes Neuronales***
 
 El *Deep learning* es una rama del *Machine learning* en la cual se emplean técnicas para que las máquinas aprendan por sí solas, se puede considerar como una forma de automatizar el análisis predictivo. El deep learning funciona mediante el análisis constante de la información que recibe. Para lograrlo, hace uso de redes neuronales artificiales, con el objetivo de que se obtenga un proceso de aprendizaje más avanzado.
 
@@ -99,7 +99,7 @@ Como cada una de las neuronas aplica una función no lineal a las variables que 
 
 El objetivo principal de las redes neuronales es aprender a tomar decisiones inteligentes con asistencia humana limitada para resolver problemas con un razonamiento similar al del cerebro humano. Para que esto suceda primero es necesario entrenar la red neuronal, para lo cual existen distintos algoritmos que le permiten a la red modificarse a sí misma durante dicho entrenamiento.
 
-***Deep Q-Learning***
+  ***Deep Q-Learning***
 
 El *Deep Q-learning* es un algoritmo de aprendizaje reforzado que utiliza redes neuronales para aproximar los *Q-values* para cada acción posible en un estado, a diferencia del *Q-learning* el cual utiliza una tabla de valores. La diferencia entre ambos algoritmos se puede ver ilustrada en las siguientes figuras:
 
@@ -126,7 +126,7 @@ El algoritmo de entrenamiento del Deep Q-learning consiste en 2 etapas:
 
 **Diseño Experimental**
 
-***Implementación Q-learning***
+  ***Implementación Q-learning***
 
 El snake está implementado utilizando la librería de python: *pygame*, un conjunto de módulos del lenguaje que facilitan el desarrollo de videojuegos en 2 dimensiones. De esta librería se destaca la estructura *Vector2* que permite manejar la posición de todos los elementos del juego implementado, está estructura también es utilizada por los agentes de Q-learning y Deep Q-learning para las interacciones con el juego. Otras librerías utilizadas por ambos agentes son: *numpy* para el manejo de arreglos y *json* para almacenar información del proceso de entrenamiento.
 
@@ -148,7 +148,7 @@ Las acciones que puede realizar el agente son: moverse a la izquierda, derecha, 
 
 El agente de *Q-learning* está implementado en el archivo *agent\_QL.py.* Para aprender el agente juega al snake cuantas veces indique el número máximo de episodios utilizando la *Q-table* para almacenar el aprendizaje obtenido, reiniciando el juego cada vez que la serpiente muere o llega a 1000 pasos sin comer ninguna fruta. Antes de realizar cada acción en el juego, el agente recopila información del entorno para construir el estado en el que se encuentra y busca los *Q-values* de dicho estado en la tabla, luego realiza ya sea una acción aleatoria o la acción que corresponde al mayor *Q-value* de dicho estado, por último actualiza dicho *Q-value* en base a la recompensa por la acción realizada utilizando la ecuación de Bellman.
 
-***Implementación Deep Q-learning***
+  ***Implementación Deep Q-learning***
 
 El agente de Deep Q-learning está implementado en el archivo *agent\_DQL.py* y se basa principalmente en las funcionalidades que añade la librería de python: *keras*, la cual es una biblioteca de redes neuronales que está especialmente diseñada para posibilitar la experimentación en poco tiempo con redes de aprendizaje profundo.
 
@@ -171,13 +171,13 @@ Al ser variables binarias los posibles valores de cada una de ellas son el 1 y 0
 
 Las acciones que puede realizar el agente del Deep Q-learning son las mismas que el agente del Q-learning: moverse a la izquierda, derecha, arriba o abajo. La red neuronal artificial está compuesta por 5 capas: la capa de entrada posee 12 nodos, uno por cada variable de los estados lo cual le permite ingresar el estado en el que se encuentre el agente como entrada. Las 3 capas ocultas de procesamiento poseen 128 nodos cada una y la capa de salida que posee 4 nodos, uno por cada acción que puede realizar el agente, la salida de estos nodos son los *Q-*values conseguidos por realizar cada acción cuando el agente se encuentra en el estado de entrada.
 
-***Entrenamiento del agente:***
+  ***Entrenamiento del agente:***
 
 El entrenamiento consiste de 1000 episodios de aprendizaje para el agente basado en Q-learning para cada una de las variantes de problemas definidos a continuación.
 
 Además, el entrenamiento del agente basado en Deep Q-learning consta de 250 episodios de aprendizaje que se realizará sobre una fracción de los problemas propuestos.
 
-***Tamaño del problema:***
+  ***Tamaño del problema:***
 
 Para probar la capacidad del agente de adaptarse a distintos entornos se desarrolló un conjunto de experimentos que medirán la efectividad del mismo en relación al tamaño de la grilla, los tamaños a explorar son 20x20, 30x30 y 50x50. Se espera que el agente consiga puntajes más altos a mayor tamaño de grilla al tener menos problemas navegando por la misma debido a que podrá evitar su propio cuerpo con mayor facilidad al acercarse a puntajes mayores.
 
@@ -185,7 +185,7 @@ Para probar la capacidad del agente de adaptarse a distintos entornos se desarro
 
 20x20 30x30 50x50
 
-***Entorno sin Obstáculos vs Entorno con Obstáculos:***
+  ***Entorno sin Obstáculos vs Entorno con Obstáculos:***
 
 Se entrenaron versiones del agente en una grilla 30x30 a la cual se le añadieron obstáculos dentro de la misma para comprobar la capacidad del agente de esquivar elementos que no sean el límite del entorno o su propio cuerpo.
 
@@ -195,21 +195,21 @@ Los obstáculos se añaden de manera aleatoria al inicio de la partida, donde ca
 
 1% de probabilidad 2% de probabilidad 4% de probabilidad
 
-***Agente de control aleatorio vs Q-learning:***
+  ***Agente de control aleatorio vs Q-learning:***
 
 Con el objetivo de comparar la eficiencia del agente entrenado mediante Q-learning se diseñó un agente de control que realiza acciones aleatorias, se realizan 1000 partidas de este agente aleatorio en los distintos tamaños de grillas y se comparan los resultados obtenidos por el agente entrenado.
 
-***Q-learning vs Deep Q-learning:***
+  ***Q-learning vs Deep Q-learning:***
 
 Se realizaron comparaciones entre los agentes entrenados mediante Q-learning y Deep Q-learning en los siguientes experimentos, tomando el mismo número de episodios de aprendizaje: Grilla común de 30x30, y entorno con obstáculos con 1%, 2% y 4% de posibilidades de aparición de obstáculo. Esto con el fin de constatar la diferencia entre la capacidad de aprendizaje de los dos algoritmos, se espera que el Deep Q-learning consiga puntajes más altos en los mismos episodios de entrenamiento.
 
-***Métricas de los resultados a analizar:***
+  ***Métricas de los resultados a analizar:***
 
 Resultados del entrenamiento del agente entrenado a través Q-learning: Para cada experimento diseñado se tomará en cuenta los siguientes valores conseguidos en 1000 episodios de entrenamiento: Puntuación conseguida por episodio, puntuación máxima obtenida durante el entrenamiento, puntuación media obtenida durante el entrenamiento, promedio de cantidad de acciones realizadas por el agente por episodio y la relación entre la cantidad de acciones y la puntuación conseguida
 
 Resultados del entrenamiento del agente entrenado a través de Deep Q-learning: Se tomó en cuenta el puntaje máximo conseguido en 250 episodios de entrenamiento, además de la media de movimientos realizados en los episodios de entrenamiento.
 
-***Ajuste de Parámetros: Entrenamiento sin obstáculos***
+  ***Ajuste de Parámetros: Entrenamiento sin obstáculos***
 
 - **Tasa de descuento:** 0.95. Se reduce poco el impacto del valor Qmax del siguiente estado porque nos interesa que el agente considere cuáles son las acciones posibles para evitar llegar a un estado que lo lleve a una muerte inevitable.
 - **Tasa de aprendizaje:** 0.001. Se utiliza un valor bajo para que los *Q-values* no se vean afectados drásticamente por situaciones atípicas al momento de realizar una acción.
@@ -221,7 +221,7 @@ Resultados del entrenamiento del agente entrenado a través de Deep Q-learning: 
 - **Recompensa si la serpiente muere:** -1000. Para evitar que el agente muera por no perder los puntos que le quitará por alejarse se tomó un valor desproporcionadamente grande para que, en caso de que tenga que elegir entre alejarse de la fruta o chocar contra un obstáculo, el agente se aleje de la fruta.
 - **Número de episodios:** 1000.
 
-***Ajuste de Parámetros: Entrenamiento con obstáculos***
+  ***Ajuste de Parámetros: Entrenamiento con obstáculos***
 
 - La **Tasa de descuento** y la **Probabilidad de exploración** tienen los mismos valores que en el experimento sin obstáculos.
 - **Tasa de aprendizaje:** 0.01. Debido a que chocarse con un obstáculo es una situación típica, se aumentó la tasa de aprendizaje para que el agente aprenda más rápido a lidiar con dichos obstáculos.
@@ -236,7 +236,7 @@ Resultados del entrenamiento del agente entrenado a través de Deep Q-learning: 
 
 **Resultados**
 
-***Resultado del aprendizaje respecto al tamaño del problema:***
+  ***Resultado del aprendizaje respecto al tamaño del problema:***
 
 En una grilla de 20x20 el agente tiene una tendencia de crecimiento casi lineal hasta los 700 episodios a partir de los cuales se disminuye la pendiente de crecimiento lo que indica que desacelera el aumento de los puntajes obtenidos, esto debido al tamaño reducido del entorno lo que ocasiona que al agente tenga que aprender a manejarse para empezar a evitar su propio cuerpo.
 
@@ -270,7 +270,7 @@ Figura 5. Puntaje promedio obtenido por el agente en distintos tamaños de grill
  
 ***Resultado del aprendizaje en un entorno con obstáculos:***
 
-***Resultados del Q-learning con 1000 episodios de entrenamiento***
+  ***Resultados del Q-learning con 1000 episodios de entrenamiento***
 
 El agente presenta dificultades para aprender cuando debe lidiar con obstáculos antes de aprender a moverse dentro del entorno, lo que ocasiona que termine realizando movimientos que aseguren su supervivencia a los que lo acercan a la fruta. Esto ocasiona que el agente llegue al límite de movimientos máximos, acabando el juego con una puntuación de 0 puntos aún en episodios tardíos del entrenamiento.
 
@@ -306,7 +306,7 @@ Figura 10. Puntaje promedio obtenido por el agente en un entorno con distintos p
 
 ![](imagenes/Aspose.Words.822f330c-6e38-4728-a5de-6ee445430b7b.025.jpeg)
 
-***Resultados del Deep Q-learning con 250 episodios de entrenamiento***
+  ***Resultados del Deep Q-learning con 250 episodios de entrenamiento***
 
 Se compararon los puntajes máximos de ambos agentes en grilla con distintas cantidades de obstáculos con el objetivo de contrastar la eficiencia que presenta el Deep Q-learning ante el Q-learning. Como se puede observar el Deep Q-learning llegó a puntajes mucho más altos que el Q-learning, y aunque ambos disminuyen su eficiencia al aumentar el número de obstáculos, se mantiene una gran diferencia entre ambos.
 
@@ -317,7 +317,7 @@ Figura 11. Puntuación máxima conseguida por el agente de Deep Q-learning en un
 
 ***Resultados en base al número de movimientos realizados durante el aprendizaje.***
 
-***Resultados del Q-learning con 1000 episodios de entrenamiento***
+  ***Resultados del Q-learning con 1000 episodios de entrenamiento***
 
 Se puede observar que a excepción del experimento con obstáculos, el promedio de los movimientos por episodios aumenta junto con el tamaños del problema debido a mientras mayor sea el tamaño de la grilla, el agente tiene que realizar una mayor cantidad de movimientos para llegar a la fruta y sobrevive por más tiempo al tener más espacio para esquivar los obstáculos. En el caso de la grilla con obstáculos, su bajo rendimiento en comparación a los demás resulta en episodios más cortos y por lo tanto, en menos movimientos por episodio.
 
@@ -333,7 +333,7 @@ Figura 13.Relación entre la cantidad de acciones por episodio y la puntuación 
 ![](imagenes/Aspose.Words.822f330c-6e38-4728-a5de-6ee445430b7b.028.jpeg)
 
 
-***Resultados del Deep Q-learning con 250 episodios de entrenamiento***
+  ***Resultados del Deep Q-learning con 250 episodios de entrenamiento***
 
 En el caso del entorno sin obstáculos se puede observar que el *Deep Q-learning* realiza mucho menos movimientos que el *Q-learning* a pesar de conseguir puntajes más altos, esto se debe a que el *Deep Q-learning* toma rutas más cortas para moverse hacia la fruta y realiza una menor cantidad de movimientos aleatorios en los primeros episodios del entrenamiento. La diferencia entre los promedios disminuye en los casos con obstáculos, ambos promedios bajando conforme el número de obstáculos aumenta, pero considerando que el *Deep Q-learning* consigue puntajes más altos, se concluye que este se mueve con mayor eficacia.
 
