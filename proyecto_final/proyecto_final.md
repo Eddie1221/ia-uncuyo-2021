@@ -290,6 +290,7 @@ Figura 9. Puntuación máxima conseguida por el agente en un entorno con distint
 En todos los casos el agente presenta una puntuación promedio baja debido al gran número de veces que llegó al límite de acciones máximas sin conseguir una fruta, lo que ocasionó partidas con una puntuación muy baja que redujeron el puntaje promedio considerablemente, esto sumado al hecho de que con mayor probabilidad de obstáculos menor es el puntaje máximo ocasiona que la puntuación promedio se vea reducida con cada aumento de dicha probabilidad.
 
 Figura 10. Puntaje promedio obtenido por el agente en un entorno con distintos porcentajes de obstáculos comparado con el un puntaje promedio del agente aleatorio.
+
 ![](imagenes/Aspose.Words.822f330c-6e38-4728-a5de-6ee445430b7b.026.jpeg)
 
 ***Resultados del Deep Q-learning con 250 episodios de entrenamiento***
@@ -297,6 +298,7 @@ Figura 10. Puntaje promedio obtenido por el agente en un entorno con distintos p
 Se compararon los puntajes máximos de ambos agentes en grilla con distintas cantidades de obstáculos con el objetivo de contrastar la eficiencia que presenta el Deep Q-learning ante el Q-learning. Como se puede observar el Deep Q-learning llegó a puntajes mucho más altos que el Q-learning, y aunque ambos disminuyen su eficiencia al aumentar el número de obstáculos, se mantiene una gran diferencia entre ambos.
 
 Figura 11. Puntuación máxima conseguida por el agente de Deep Q-learning en un entorno con distintos porcentajes de obstáculos comparado con el puntaje máximo del agente del Q-learning en las mismas grillas.
+
 ![](imagenes/Aspose.Words.822f330c-6e38-4728-a5de-6ee445430b7b.027.jpeg)
 
 ***Resultados en base al número de movimientos realizados durante el aprendizaje.***
