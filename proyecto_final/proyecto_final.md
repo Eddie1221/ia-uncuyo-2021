@@ -1,9 +1,9 @@
-﻿**Snake: Aprendizaje reforzado de un agente basado en Q-learning.**
+# ﻿**Snake: Aprendizaje reforzado de un agente basado en Q-learning y Deep Q-learning.**
 
 Carlos Perez Legajo: 13245.
 Eduardo Perez Legajo: 13244.
 
-**Introducción**
+# **Introducción**
 
 Snake, lanzado en la década de 1970, es un videojuego basado en controlar una serpiente en un plano de 2 dimensiones delimitado, el objetivo del juego es recoger tantos puntos como sea posible evitando golpearse contra las paredes que rodean el juego, o contra su propio cuerpo. Si bien la premisa del juego parece simple a primera vista, la dificultad del mismo aumenta mientras más puntaje se consigue, ya que mientras más puntos recoja la serpiente más largo se hace su cuerpo, por lo que la dificultad de manejar aumenta progresivamente
 
@@ -13,7 +13,7 @@ En este informe se intentará dar respuesta a estas preguntas con el desarrollo 
 
 Si bien la implementación de Q-learning es el punto fundamental del trabajo, también se abordará una solución relacionada provista por el artículo Snake Played by a Deep Reinforcement Learning Agent [1], la cual es una variante del Q-learning desarrollada desde la perspectiva del aprendizaje profundo por medio de redes neuronales. Se realizará una comparación de los resultados obtenidos de ambos enfoques con el objetivo de tener una introducción al área del aprendizaje profundo.
 
-**Marco Teórico**
+# **Marco Teórico**
 
 Previo a la implementación de la solución planteada se plasmarán los conceptos teóricos que sirven como base de la solución del problema ya que como se mencionó previamente, el Q-learning no es más que una técnica de aprendizaje reforzado. Empezaremos dando una breve definición de esta área del aprendizaje automático y algunos términos importantes.
 
@@ -125,7 +125,7 @@ El algoritmo de entrenamiento del Deep Q-learning consiste en 2 etapas:
 1. Muestreo: el agente realiza acciones aleatorias por un número determinado de episodios y guarda la información de las experiencias en la memoria.
 1. Entrenamiento: Se selecciona aleatoriamente un conjunto de tuplas de dicha memoria y se aprende de dicho conjunto utilizando aproximaciones y predicciones.
 
-**Diseño Experimental**
+# **Diseño Experimental**
 
   ***Implementación Q-learning***
 
@@ -235,7 +235,7 @@ Resultados del entrenamiento del agente entrenado a través de Deep Q-learning: 
 
 \*Nota: Los parámetros de entrenamientos del Q-learning y el Deep Q-learning sólo difieren en el número de episodios, siendo 1000 y 250 respectivamente.
 
-**Resultados**
+# **Resultados**
 
   ***Resultado del aprendizaje respecto al tamaño del problema:***
 
@@ -342,7 +342,7 @@ Figura 14. Promedio del número de acciones realizadas por el agente de Deep Q-l
 
 ![](imagenes/Aspose.Words.822f330c-6e38-4728-a5de-6ee445430b7b.029.jpeg)
 
-**Conclusiones Finales**
+# **Conclusiones Finales**
 
 Al inicio del proyecto se plantearon una serie de incógnitas las cuales marcaron el desarrollo del mismo, estas preguntas nos permitieron encarrilar la implementación de un agente el cual a través de ciertas cantidades de episodios de aprendizaje reforzado han conseguido mejorar paulatinamente en el juego de snake, para esto se tomaron dos algoritmos distintos: El Q-learning y el Deep Q-learning.
 
@@ -354,7 +354,7 @@ Finalmente debido a restricciones de tiempo y de recursos la cantidad de episodi
 
 En conclusión los resultados experimentales fueron satisfactorios y acorde con las predicciones que teníamos al iniciar el desarrollo del proyecto y las preguntas que surgieron al inicio del mismo fueron aclaradas gracias tanto al marco teórico de la investigación como a las implementaciones desarrolladas para llevar a cabo los experimentos.
 
-**Bibliografía**
+# **Bibliografía**
 
 1. Snake Played by a Deep Reinforcement Learning Agent [https://towardsdatascience.com/snake-played-by-a-deep-reinforcement-learning-agent-53f2c4 331d36](https://towardsdatascience.com/snake-played-by-a-deep-reinforcement-learning-agent-53f2c4331d36)
 1. Understanding the Markov Decision Process (MDP) <https://builtin.com/machine-learning/markov-decision-process>
