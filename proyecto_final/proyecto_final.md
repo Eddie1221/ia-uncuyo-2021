@@ -22,7 +22,7 @@ Previo a la implementación de la solución planteada se plasmarán los concepto
 - Acción: Es la elección que el agente toma en un estado dado del entorno según su posición.
 - Política: Es la estrategia de toma de decisiones que el agente, las políticas dictan las acciones que el agente toma en función de su estado y del entorno.
 
-***Aprendizaje Reforzado***
+	***Aprendizaje Reforzado***
 
 Como su nombre lo indica, el aprendizaje reforzado se basa en el concepto del aprendizaje mediante recompensas, en esta área de estudio la misión del agente es aprender a conseguir estas recompensas en un entorno desconocido. Este concepto de acción y recompensa lleva siendo años estudiado en animales por lo que resulta idóneo planear el juego de ‘snake’ mediante este lente ya que podemos ver claramente qué elementos del juego pueden clasificarse como agente, recompensa y castigo.
 
@@ -37,7 +37,7 @@ Los algoritmos básicos de aprendizaje reforzado están modelados como un proces
 
 Volviendo al aprendizaje reforzado, el modelado de este como proceso de decisión de Markov está caracterizado por al desconocimiento de las probabilidades o recompensas, por lo que es útil definir una función que permita inferir cual acción debe ser tomada según la política que se tenga, la cual mediante la experiencia del agente nos provea la “calidad” de una acción en un estado dado, es decir llevar registro de la acción que causa que el agente pase del estado s al estado s´ y el resultado de la misma. Estos registros se guardan en una tabla llamada Q-table y nos introduce al concepto de Q-learning.
 
-***Q-Learning***
+	***Q-Learning***
 
 El Q-learning es una técnica de aprendizaje reforzado que dado un estado intenta encontrar la siguiente mejor acción basado en un sistema de recompensas que obtiene al interactuar con su entorno. El objetivo del agente es maximizar su recompensa total, esto lo hace sumando la máxima recompensa alcanzable en estados futuros a la recompensa por alcanzar su estado actual. El algoritmo no requiere un modelo de entorno y maneja problemas con transiciones estocásticas.
 
