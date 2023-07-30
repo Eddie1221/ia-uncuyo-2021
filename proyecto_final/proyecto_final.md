@@ -241,19 +241,19 @@ Resultados del entrenamiento del agente entrenado a través de Deep Q-learning: 
 En una grilla de 20x20 el agente tiene una tendencia de crecimiento casi lineal hasta los 700 episodios a partir de los cuales se disminuye la pendiente de crecimiento lo que indica que desacelera el aumento de los puntajes obtenidos, esto debido al tamaño reducido del entorno lo que ocasiona que al agente tenga que aprender a manejarse para empezar a evitar su propio cuerpo.
 
 Figura 1. Puntajes conseguidos por episodio en una grilla de 20x20.
-
 ![](imagenes/Aspose.Words.822f330c-6e38-4728-a5de-6ee445430b7b.016.jpeg)
 
-Al aumentar el tamaño del entorno, se mantiene el crecimiento lineal de los puntajes obtenidos al pasar los 700 episodios, lo cual significa que a una grilla mayor el agente debe lidiar menos con obstáculos y aprende a evitar mejor las paredes.![](imagenes/Aspose.Words.822f330c-6e38-4728-a5de-6ee445430b7b.017.jpeg)
+Al aumentar el tamaño del entorno, se mantiene el crecimiento lineal de los puntajes obtenidos al pasar los 700 episodios, lo cual significa que a una grilla mayor el agente debe lidiar menos con obstáculos y aprende a evitar mejor las paredes.
 
 Figura 2. Puntajes conseguidos por episodio en una grilla de 30x30.
+![](imagenes/Aspose.Words.822f330c-6e38-4728-a5de-6ee445430b7b.017.jpeg)
 
 En una grilla de 50x50 el agente aprende con mayor velocidad a lidiar con la obtención de fruta, al tener más espacio y así lidiar menos con las paredes y su propio cuerpo en comparación con los anteriores experimentos, permitiendo así alcanzar ocasionalmente puntajes más altos que explican el aumento en la dispersión de los puntajes a partir de los 400 episodios.
 
 Figura 3. Puntajes conseguidos por episodio en una grilla de 50x50.
+![](imagenes/Aspose.Words.822f330c-6e38-4728-a5de-6ee445430b7b.018.jpeg)![](imagenes/Aspose.Words.822f330c-6e38-4728-a5de-6ee445430b7b.019.jpeg)
 
-Se compararon los puntajes obtenidos en las grillas de 20x20, 30x30 y 50x50 por el agente aleatorio y los obtenidos por el agente basado en Q-learning en las mismas grillas con el objetivo de contrastar la efectividad del agente implementado. Se observa además que la puntuación máxima del Q-learning aumenta junto con el tamaño del entorno.![](imagenes/Aspose.Words.822f330c-6e38-4728-a5de-6ee445430b7b.018.jpeg)![](imagenes/Aspose.Words.822f330c-6e38-4728-a5de-6ee445430b7b.019.jpeg)
-
+Se compararon los puntajes obtenidos en las grillas de 20x20, 30x30 y 50x50 por el agente aleatorio y los obtenidos por el agente basado en Q-learning en las mismas grillas con el objetivo de contrastar la efectividad del agente implementado. Se observa además que la puntuación máxima del Q-learning aumenta junto con el tamaño del entorno.
 Figura 4. Puntajes máximos conseguidos por el agente en distintos tamaños de grilla comparado con los puntajes máximos conseguidos por un agente aleatorio.
 
 De la misma manera se observa que el puntaje promedio del agente basado en Q-learning aumenta con respecto al tamaño del entorno, mientras que el del agente aleatorio disminuye
