@@ -251,18 +251,17 @@ Figura 2. Puntajes conseguidos por episodio en una grilla de 30x30.
 En una grilla de 50x50 el agente aprende con mayor velocidad a lidiar con la obtención de fruta, al tener más espacio y así lidiar menos con las paredes y su propio cuerpo en comparación con los anteriores experimentos, permitiendo así alcanzar ocasionalmente puntajes más altos que explican el aumento en la dispersión de los puntajes a partir de los 400 episodios.
 
 Figura 3. Puntajes conseguidos por episodio en una grilla de 50x50.
-![](imagenes/Aspose.Words.822f330c-6e38-4728-a5de-6ee445430b7b.018.jpeg)![](imagenes/Aspose.Words.822f330c-6e38-4728-a5de-6ee445430b7b.019.jpeg)
+![](imagenes/Aspose.Words.822f330c-6e38-4728-a5de-6ee445430b7b.018.jpeg)
 
 Se compararon los puntajes obtenidos en las grillas de 20x20, 30x30 y 50x50 por el agente aleatorio y los obtenidos por el agente basado en Q-learning en las mismas grillas con el objetivo de contrastar la efectividad del agente implementado. Se observa además que la puntuación máxima del Q-learning aumenta junto con el tamaño del entorno.
 
 Figura 4. Puntajes máximos conseguidos por el agente en distintos tamaños de grilla comparado con los puntajes máximos conseguidos por un agente aleatorio.
-![](imagenes/Aspose.Words.822f330c-6e38-4728-a5de-6ee445430b7b.020.jpeg)
+![](imagenes/Aspose.Words.822f330c-6e38-4728-a5de-6ee445430b7b.019.jpeg)
 
 De la misma manera se observa que el puntaje promedio del agente basado en Q-learning aumenta con respecto al tamaño del entorno, mientras que el del agente aleatorio disminuye
 
 Figura 5. Puntaje promedio obtenido por el agente en distintos tamaños de grilla comparado con los puntajes promedios obtenidos por un agente aleatorio.
-![](imagenes/Aspose.Words.822f330c-6e38-4728-a5de-6ee445430b7b.021.jpeg)
-
+ ![](imagenes/Aspose.Words.822f330c-6e38-4728-a5de-6ee445430b7b.020.jpeg)
 ***Resultado del aprendizaje en un entorno con obstáculos:***
 
 ***Resultados del Q-learning con 1000 episodios de entrenamiento***
@@ -270,36 +269,40 @@ Figura 5. Puntaje promedio obtenido por el agente en distintos tamaños de grill
 El agente presenta dificultades para aprender cuando debe lidiar con obstáculos antes de aprender a moverse dentro del entorno, lo que ocasiona que termine realizando movimientos que aseguren su supervivencia a los que lo acercan a la fruta. Esto ocasiona que el agente llegue al límite de movimientos máximos, acabando el juego con una puntuación de 0 puntos aún en episodios tardíos del entrenamiento.
 
 Figura 6. Puntajes conseguidos por episodio por el agente en una grilla con una probabilidad de 1% obstáculos aleatorios.
-![](imagenes/Aspose.Words.822f330c-6e38-4728-a5de-6ee445430b7b.022.jpeg)
+ ![](imagenes/Aspose.Words.822f330c-6e38-4728-a5de-6ee445430b7b.021.jpeg)
+
 
 Se observa un comportamiento similar al caso anterior, con la diferencia de que el rango de puntajes se ve reducido con el aumento del número de obstáculos resultando así en un menor puntaje máximo.
 
 Figura 7. Puntajes conseguidos por episodio por el agente en una grilla con una probabilidad de 2% obstáculos aleatorios.
-![](imagenes/Aspose.Words.822f330c-6e38-4728-a5de-6ee445430b7b.023.jpeg)
+![](imagenes/Aspose.Words.822f330c-6e38-4728-a5de-6ee445430b7b.022.jpeg)
+
 
 En el caso donde cada casilla tiene un 4% de probabilidades de ser un obstáculo se puede observar que tiende a decrecer en puntaje en los últimos episodios del entrenamiento, a parte del menor puntaje máximo debido al aumento de obstáculos, esto se debe a que el con cada muerte el agente prioriza más la supervivencia por encima de comer la fruta por lo que si bien se observa una menor cantidad de episodios en donde el agente termina con una puntuación de 0, las puntuaciones más altas también van decayendo.
 
 Figura 8. Puntajes conseguidos por episodio por el agente en una grilla con una probabilidad de 4% obstáculos aleatorios.
-![](imagenes/Aspose.Words.822f330c-6e38-4728-a5de-6ee445430b7b.024.jpeg)
+![](imagenes/Aspose.Words.822f330c-6e38-4728-a5de-6ee445430b7b.023.jpeg)
+
 
 Como se puede observar, la puntuación máxima obtenida por el agente en un entorno con obstáculos es menor a la conseguida en uno sin obstáculos, reduciendo aún más por cada aumento en el porcentaje de obstáculos. Aun así sigue siendo más efectivo que el aleatorio el cual consiguió una puntuación máxima de 2 con un 1% de obstáculos y 1 en el resto de casos.
 
 Figura 9. Puntuación máxima conseguida por el agente en un entorno con distintos porcentajes de obstáculos comparado con el puntaje máximo del agente aleatorio en las mismas grillas.
-![](imagenes/Aspose.Words.822f330c-6e38-4728-a5de-6ee445430b7b.025.jpeg)
+![](imagenes/Aspose.Words.822f330c-6e38-4728-a5de-6ee445430b7b.024.jpeg)
+
 
 En todos los casos el agente presenta una puntuación promedio baja debido al gran número de veces que llegó al límite de acciones máximas sin conseguir una fruta, lo que ocasionó partidas con una puntuación muy baja que redujeron el puntaje promedio considerablemente, esto sumado al hecho de que con mayor probabilidad de obstáculos menor es el puntaje máximo ocasiona que la puntuación promedio se vea reducida con cada aumento de dicha probabilidad.
 
 Figura 10. Puntaje promedio obtenido por el agente en un entorno con distintos porcentajes de obstáculos comparado con el un puntaje promedio del agente aleatorio.
+![](imagenes/Aspose.Words.822f330c-6e38-4728-a5de-6ee445430b7b.025.jpeg)
 
-![](imagenes/Aspose.Words.822f330c-6e38-4728-a5de-6ee445430b7b.026.jpeg)
 
 ***Resultados del Deep Q-learning con 250 episodios de entrenamiento***
 
 Se compararon los puntajes máximos de ambos agentes en grilla con distintas cantidades de obstáculos con el objetivo de contrastar la eficiencia que presenta el Deep Q-learning ante el Q-learning. Como se puede observar el Deep Q-learning llegó a puntajes mucho más altos que el Q-learning, y aunque ambos disminuyen su eficiencia al aumentar el número de obstáculos, se mantiene una gran diferencia entre ambos.
 
 Figura 11. Puntuación máxima conseguida por el agente de Deep Q-learning en un entorno con distintos porcentajes de obstáculos comparado con el puntaje máximo del agente del Q-learning en las mismas grillas.
+![](imagenes/Aspose.Words.822f330c-6e38-4728-a5de-6ee445430b7b.026.jpeg)
 
-![](imagenes/Aspose.Words.822f330c-6e38-4728-a5de-6ee445430b7b.027.jpeg)
 
 ***Resultados en base al número de movimientos realizados durante el aprendizaje.***
 
@@ -308,18 +311,21 @@ Figura 11. Puntuación máxima conseguida por el agente de Deep Q-learning en un
 Se puede observar que a excepción del experimento con obstáculos, el promedio de los movimientos por episodios aumenta junto con el tamaños del problema debido a mientras mayor sea el tamaño de la grilla, el agente tiene que realizar una mayor cantidad de movimientos para llegar a la fruta y sobrevive por más tiempo al tener más espacio para esquivar los obstáculos. En el caso de la grilla con obstáculos, su bajo rendimiento en comparación a los demás resulta en episodios más cortos y por lo tanto, en menos movimientos por episodio.
 
 Figura 12.Promedio del número de acciones por episodio del agente en las grillas de 20x20, 30x30, 50x50 y 30x30 con obstáculos.
-![](imagenes/Aspose.Words.822f330c-6e38-4728-a5de-6ee445430b7b.028.jpeg)
+![](imagenes/Aspose.Words.822f330c-6e38-4728-a5de-6ee445430b7b.027.jpeg)
+
 
 Se observa que la conforme el agente va aprendiendo, el número de movimientos va disminuyendo en relación al número de puntos que consigue por episodio, esto ocurre hasta aproximadamente el episodio 650, donde al alcanzar puntajes más altos el agente requiere una mayor cantidad de movimientos por cada fruta obtenida al intentar esquivar las paredes y su cuerpo.
 
 Figura 13.Relación entre la cantidad de acciones por episodio y la puntuación conseguida por episodio del agente en una grilla 30x30 sin obstáculos.
-![](imagenes/Aspose.Words.822f330c-6e38-4728-a5de-6ee445430b7b.029.jpeg)
+![](imagenes/Aspose.Words.822f330c-6e38-4728-a5de-6ee445430b7b.028.jpeg)
+
 
 ***Resultados del Deep Q-learning con 250 episodios de entrenamiento***
 
 En el caso del entorno sin obstáculos se puede observar que el *Deep Q-learning* realiza mucho menos movimientos que el *Q-learning* a pesar de conseguir puntajes más altos, esto se debe a que el *Deep Q-learning* toma rutas más cortas para moverse hacia la fruta y realiza una menor cantidad de movimientos aleatorios en los primeros episodios del entrenamiento. La diferencia entre los promedios disminuye en los casos con obstáculos, ambos promedios bajando conforme el número de obstáculos aumenta, pero considerando que el *Deep Q-learning* consigue puntajes más altos, se concluye que este se mueve con mayor eficacia.
 
-Figura 11. Promedio del número de acciones realizadas por el agente de Deep Q-learning en un entorno con distintos porcentajes de obstáculos comparado con el promedio del número de acciones realizadas por del agente del Q-learning en las mismas grillas.
+Figura 14. Promedio del número de acciones realizadas por el agente de Deep Q-learning en un entorno con distintos porcentajes de obstáculos comparado con el promedio del número de acciones realizadas por del agente del Q-learning en las mismas grillas.
+![](imagenes/Aspose.Words.822f330c-6e38-4728-a5de-6ee445430b7b.029.jpeg)
 
 **Conclusiones Finales**
 
